@@ -23,11 +23,14 @@ namespace OCROverlay
     public partial class LanguageSelectionForm : Window
     {
         List<LanguageEntry> languageEntries;
+        List<LanguageEntry> availableLanguagesList;
+        List<LanguageEntry> selectedLanguagesList;
+
         public LanguageSelectionForm()
         {
             InitializeComponent();
             this.Closing += new CancelEventHandler(LanguageSelection_Closing);
-            grabLanguagePacks();
+            GrabLanguagePacks();
         }
 
         void LanguageSelection_Closing(object sender, CancelEventArgs e)
@@ -35,7 +38,7 @@ namespace OCROverlay
             //closing code
         }
 
-        private void grabLanguagePacks()
+        private void GrabLanguagePacks()
         {
             languageEntries = new List<LanguageEntry>();
 
@@ -59,20 +62,13 @@ namespace OCROverlay
                                 languageEntries.Add(currentEntry);
                             }
 
-            foreach(LanguageEntry entry in languageEntries)
-            {
-                Console.WriteLine("{0}:{1}:{2}", entry.shortCode, entry.longName, entry.datapackURL);
-            }
-
-            //foreach (var cell in query)
+            //foreach(LanguageEntry entry in languageEntries)
             //{
-            //foreach(HtmlNode link in cell.CellLink)
-            //{
-            //    Console.WriteLine(link.GetAttributeValue("href", string.Empty));
-            //}
-            //Console.WriteLine("{0}", cell.CellText);
+            //    Console.WriteLine("{0}:{1}:{2}", entry.shortCode, entry.longName, entry.datapackURL);
             //}
 
+            availableLanguagesList = new List<LanguageEntry>(languageEntries);
+            listBox_available_langs.ItemsSource = availableLanguagesList;
         }
 
         private void btn_add_Click(object sender, RoutedEventArgs e)
@@ -83,6 +79,21 @@ namespace OCROverlay
         private void btn_add_all_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("add all button was clicked");
+
+            string messageBoxText = "Are you sure you wish add all languages? Language packs are very large in size (10mb+ EACH) and adding all language packs will result in downloading ~1GB of data";
+            string caption = "Warning";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result = MessageBox.Show(messageBoxText, caption, button, icon);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void btn_remove_Click(object sender, RoutedEventArgs e)
