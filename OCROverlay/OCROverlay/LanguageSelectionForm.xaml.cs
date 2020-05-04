@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using OCROverlay.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -20,15 +22,57 @@ namespace OCROverlay
     /// </summary>
     public partial class LanguageSelectionForm : Window
     {
+        List<LanguageEntry> languageEntries;
         public LanguageSelectionForm()
         {
             InitializeComponent();
             this.Closing += new CancelEventHandler(LanguageSelection_Closing);
+            grabLanguagePacks();
         }
 
         void LanguageSelection_Closing(object sender, CancelEventArgs e)
         {
             //closing code
+        }
+
+        private void grabLanguagePacks()
+        {
+            languageEntries = new List<LanguageEntry>();
+
+            var url = "https://tesseract-ocr.github.io/tessdoc/Data-Files";
+            var web = new HtmlWeb();
+            var doc = web.Load(url);
+
+            var tables = doc.DocumentNode.SelectNodes("//table");
+            //Could convert this to linq at some point
+            foreach (HtmlNode table in tables)
+                if (table.SelectNodes("thead/tr/th") != null && table.SelectNodes("thead/tr/th").Count >= 3)
+                    if (table.SelectNodes("thead/tr/th")[2].InnerText == "4.0 traineddata")
+                        foreach (HtmlNode tableBody in table.SelectNodes("tbody"))
+                            foreach (HtmlNode row in tableBody.SelectNodes("tr"))
+                            {
+                                Console.WriteLine("New Row");
+                                LanguageEntry currentEntry = new LanguageEntry();
+                                currentEntry.shortCode = row.SelectNodes("th|td")[0].InnerText;
+                                currentEntry.longName = row.SelectNodes("th|td")[1].InnerText;
+                                currentEntry.datapackURL = row.SelectNodes("th|td")[2].Descendants("a").FirstOrDefault().Attributes["href"].Value;
+                                languageEntries.Add(currentEntry);
+                            }
+
+            foreach(LanguageEntry entry in languageEntries)
+            {
+                Console.WriteLine("{0}:{1}:{2}", entry.shortCode, entry.longName, entry.datapackURL);
+            }
+
+            //foreach (var cell in query)
+            //{
+            //foreach(HtmlNode link in cell.CellLink)
+            //{
+            //    Console.WriteLine(link.GetAttributeValue("href", string.Empty));
+            //}
+            //Console.WriteLine("{0}", cell.CellText);
+            //}
+
         }
 
         private void btn_add_Click(object sender, RoutedEventArgs e)

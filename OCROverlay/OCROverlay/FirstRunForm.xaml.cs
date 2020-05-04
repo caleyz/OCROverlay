@@ -22,8 +22,7 @@ namespace OCROverlay
     public partial class FirstRunForm : Window
     {
         public FirstRunForm()
-        {
-            RunChecks();
+        {            
             InitializeComponent();
             this.Closing += new CancelEventHandler(FirstRun_Closing);
             RunChecks();
@@ -36,23 +35,27 @@ namespace OCROverlay
 
         private void RunChecks()
         {
-            if(Screen.AllScreens.Length > 1)
+            if (Screen.AllScreens.Length > 1)
                 btn_screens.IsEnabled = true;
+            else
+                img_screen_tick.Visibility = Visibility.Visible;
         }
 
         private void btn_languages_Click(object sender, RoutedEventArgs e)
         {
-
+            Console.WriteLine("languages button was clicked");
+            LanguageSelectionForm langForm = new LanguageSelectionForm();
+            langForm.ShowDialog();
         }
 
         private void btn_screens_Click(object sender, RoutedEventArgs e)
         {
-
+            Console.WriteLine("screens button was clicked");
         }
 
         private void btn_confirm_Click(object sender, RoutedEventArgs e)
         {
-
+            Console.WriteLine("confirm button was clicked");
         }
     }
 }
