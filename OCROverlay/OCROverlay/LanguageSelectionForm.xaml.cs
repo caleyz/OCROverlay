@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace OCROverlay
 {
@@ -23,8 +24,8 @@ namespace OCROverlay
     public partial class LanguageSelectionForm : Window
     {
         List<LanguageEntry> languageEntries;
-        List<LanguageEntry> availableLanguagesList;
-        List<LanguageEntry> selectedLanguagesList;
+        ObservableCollection<LanguageEntry> availableLanguagesList;
+        ObservableCollection<LanguageEntry> selectedLanguagesList;
 
         public LanguageSelectionForm()
         {
@@ -33,9 +34,18 @@ namespace OCROverlay
             GrabLanguagePacks();
         }
 
+        private TaskCompletionSource<Boolean> _tcs = new TaskCompletionSource<Boolean>();
+
+        public Task<Boolean> Fetch()
+        {
+            return _tcs.Task;
+        }
+
         void LanguageSelection_Closing(object sender, CancelEventArgs e)
         {
-            //closing code
+            Console.WriteLine("Language Selection Form Closing");
+            bool res = selectedLanguagesList.Count >= 2 ? true : false;
+            _tcs.SetResult(res);
         }
 
         private void GrabLanguagePacks()
@@ -54,7 +64,6 @@ namespace OCROverlay
                         foreach (HtmlNode tableBody in table.SelectNodes("tbody"))
                             foreach (HtmlNode row in tableBody.SelectNodes("tr"))
                             {
-                                Console.WriteLine("New Row");
                                 LanguageEntry currentEntry = new LanguageEntry();
                                 currentEntry.shortCode = row.SelectNodes("th|td")[0].InnerText;
                                 currentEntry.longName = row.SelectNodes("th|td")[1].InnerText;
@@ -67,13 +76,25 @@ namespace OCROverlay
             //    Console.WriteLine("{0}:{1}:{2}", entry.shortCode, entry.longName, entry.datapackURL);
             //}
 
-            availableLanguagesList = new List<LanguageEntry>(languageEntries);
+            availableLanguagesList = new ObservableCollection<LanguageEntry>(languageEntries);
+            selectedLanguagesList = new ObservableCollection<LanguageEntry>();
             listBox_available_langs.ItemsSource = availableLanguagesList;
+            listBox_selected_langs.ItemsSource = selectedLanguagesList;
         }
 
         private void btn_add_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("add button was clicked");
+            if(listBox_available_langs.SelectedItems != null)
+            {
+                var items = listBox_available_langs.SelectedItems.OfType<object>().ToList(); //Can't modify observablecollection while enumerating, so copy
+                foreach (LanguageEntry item in items)
+                {
+                    selectedLanguagesList.Add(item);
+                    availableLanguagesList.Remove(item);
+                }
+                listBox_selected_langs.UnselectAll();
+            }
         }
 
         private void btn_add_all_Click(object sender, RoutedEventArgs e)

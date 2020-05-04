@@ -14,8 +14,15 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="listBox_selected_langs" Height="357" Margin="418,52,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="250" SelectionMode="Multiple"/>
         
+        <ListBox x:Name="listBox_selected_langs" Height="357" Margin="418,52,10,0" VerticalAlignment="Top" Width="250" SelectionMode="Multiple">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding longName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
         <Label x:Name="lbl_available_lang" Content="Available Languages" HorizontalAlignment="Left" Margin="38,10,0,0" FontSize="20"  VerticalAlignment="Top" Width="190"/>
         <Label x:Name="lbl_selected_lang" Content="Selected Languages" HorizontalAlignment="Left" Margin="445,10,0,0" FontSize="20"  VerticalAlignment="Top" Width="190"/>
 

@@ -41,11 +41,35 @@ namespace OCROverlay
                 img_screen_tick.Visibility = Visibility.Visible;
         }
 
+        private async void SetupLanguages()
+        {
+            ResetLanguageImages();
+            LanguageSelectionForm langForm = new LanguageSelectionForm();
+            langForm.ShowDialog();
+            bool value = await langForm.Fetch();
+            //if (value)
+            //    img_lang_tick.Visibility = Visibility.Visible;
+            //else
+            //    img_lang_cross.Visibility = Visibility.Visible;
+            //((FirstRunForm)System.Windows.Application.Current.FirstRunForm.UpdateLayout();
+        }
+
+        private void ResetLanguageImages()
+        {
+            img_lang_tick.Visibility = Visibility.Hidden;
+            img_lang_cross.Visibility = Visibility.Hidden;
+        }
+
+        private void ResetScreenImages()
+        {
+            img_screen_tick.Visibility = Visibility.Hidden;
+            img_screen_cross.Visibility = Visibility.Hidden;
+        }
+
         private void btn_languages_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("languages button was clicked");
-            LanguageSelectionForm langForm = new LanguageSelectionForm();
-            langForm.ShowDialog();
+            SetupLanguages();
         }
 
         private void btn_screens_Click(object sender, RoutedEventArgs e)
