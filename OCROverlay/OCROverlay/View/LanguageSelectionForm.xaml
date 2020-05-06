@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OCROverlay"
         xmlns:ap="clr-namespace:OCROverlay.Util"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         ap:DialogCloser.DialogResult="{Binding Close}"
         mc:Ignorable="d"
-        Title="LanguageSelectionFomr" Height="450" Width="685.973" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="LanguageSelectionForm" Height="450" Width="685.973" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <ListBox x:Name="listBox_available_langs" 
                  ItemsSource="{Binding AvailableLanguageList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="357" Margin="10,52,0,0" VerticalAlignment="Top" Width="250" SelectionMode="Multiple">

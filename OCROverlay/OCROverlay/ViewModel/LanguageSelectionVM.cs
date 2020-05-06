@@ -107,7 +107,8 @@ namespace OCROverlay.ViewModel
                 SelectedLanguageList.Add(item);
                 AvailableLanguageList.Remove(item);
             }
-            SelectedLanguageList.OrderBy(n => n.LongName);
+            var sortList = SelectedLanguageList.OrderBy(x => x.LongName);
+            SelectedLanguageList = new ObservableCollection<LanguageEntry>(sortList);
         }
 
         public void RemoveSelectedItemsFromListView(List<LanguageEntry> languageEntries)
@@ -117,7 +118,8 @@ namespace OCROverlay.ViewModel
                 SelectedLanguageList.Remove(item);
                 AvailableLanguageList.Add(item);
             }
-            AvailableLanguageList.OrderBy(n => n.LongName);
+            var sortList = AvailableLanguageList.OrderBy(x => x.LongName);
+            AvailableLanguageList = new ObservableCollection<LanguageEntry>(sortList);
         }
 
         public void AddAllLanguages()
@@ -129,7 +131,8 @@ namespace OCROverlay.ViewModel
             fullList.AddRange(tempAvailList);
             fullList.AddRange(tempSelectList);
             AvailableLanguageList.Clear();
-            SelectedLanguageList = new ObservableCollection<LanguageEntry>(fullList);
+            var sortList = fullList.OrderBy(x => x.LongName);
+            SelectedLanguageList = new ObservableCollection<LanguageEntry>(sortList);
         }
 
         public void RemoveAllLanguages()
@@ -138,11 +141,11 @@ namespace OCROverlay.ViewModel
             List<LanguageEntry> tempSelectList = SelectedLanguageList.ToList();
             List<LanguageEntry> fullList = new List<LanguageEntry>();
             fullList.AddRange(tempAvailList);
-            fullList.AddRange(tempSelectList);
+            fullList.AddRange(tempSelectList);            
             SelectedLanguageList.Clear();
-            AvailableLanguageList = new ObservableCollection<LanguageEntry>(fullList);
-            AvailableLanguageList.OrderBy(n => n.LongName);
-        }
+            var sortList = fullList.OrderBy(x => x.LongName);
+            AvailableLanguageList = new ObservableCollection<LanguageEntry>(sortList);
+        }        
 
         #region Variables
 
