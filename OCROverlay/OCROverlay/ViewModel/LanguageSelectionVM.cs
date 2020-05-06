@@ -1,7 +1,7 @@
 ﻿using HtmlAgilityPack;
-using OCROverlay.Interfaces;
 using OCROverlay.Model;
 using OCROverlay.Util;
+using OCROverlay.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OCROverlay.ViewModel
 {
@@ -18,17 +19,8 @@ namespace OCROverlay.ViewModel
     {
         public LanguageSelectionVM()
         {
-            this.CloseWindowCommand = new RelayCommand<ICloseable>(this.CloseWindow);
             Console.WriteLine("Language Selection VM was initialised");
             GrabLanguagePacks();
-        }
-
-        private void CloseWindow(ICloseable window)
-        {
-            if(window != null)
-            {
-                window.Close();
-            }
         }
 
         private void GrabLanguagePacks()
@@ -62,9 +54,10 @@ namespace OCROverlay.ViewModel
 
             AvailableLanguageList = new ObservableCollection<LanguageEntry>(languageEntries);
             SelectedLanguageList = new ObservableCollection<LanguageEntry>();
+            RetrieveSavedLanguages();
         }
 
-        public void ConfirmLanguage()
+        public void ConfirmLanguages()
         {
             if(SelectedLanguageList.Count >= 2)
             {
@@ -77,7 +70,32 @@ namespace OCROverlay.ViewModel
                     ms.Read(buffer, 0, buffer.Length);
                     Properties.Settings.Default.SelectedLanguages = Convert.ToBase64String(buffer);
                     Properties.Settings.Default.Save();
-                    //CloseWindow(CloseWindowCommand);
+                    Close = true;
+                }
+            }
+            else
+            {
+                string messageBoxText = "You must choose at least 2 languages to use";
+                string caption = "Warning";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBox.Show(messageBoxText, caption, button, icon);
+            }
+        }
+
+        public void RetrieveSavedLanguages()
+        {
+            using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(Properties.Settings.Default.SelectedLanguages)))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                ObservableCollection<LanguageEntry> holder = (ObservableCollection<LanguageEntry>)bf.Deserialize(ms);
+                if (holder.Count > 0)
+                {
+                    foreach (LanguageEntry entry in holder)
+                    {
+                        SelectedLanguageList.Add(entry);
+                        AvailableLanguageList.Remove(AvailableLanguageList.Where(i => i.LongName == entry.LongName).Single());
+                    }
                 }
             }
         }
@@ -89,6 +107,7 @@ namespace OCROverlay.ViewModel
                 SelectedLanguageList.Add(item);
                 AvailableLanguageList.Remove(item);
             }
+            SelectedLanguageList.OrderBy(n => n.LongName);
         }
 
         public void RemoveSelectedItemsFromListView(List<LanguageEntry> languageEntries)
@@ -98,6 +117,7 @@ namespace OCROverlay.ViewModel
                 SelectedLanguageList.Remove(item);
                 AvailableLanguageList.Add(item);
             }
+            AvailableLanguageList.OrderBy(n => n.LongName);
         }
 
         public void AddAllLanguages()
@@ -121,9 +141,23 @@ namespace OCROverlay.ViewModel
             fullList.AddRange(tempSelectList);
             SelectedLanguageList.Clear();
             AvailableLanguageList = new ObservableCollection<LanguageEntry>(fullList);
+            AvailableLanguageList.OrderBy(n => n.LongName);
         }
 
         #region Variables
+
+        private bool _close = false;
+        public bool Close
+        {
+            get { return _close; }
+            set
+            {
+                if (value == _close)
+                    return;
+                _close = value;
+                NotifyPropertyChanged("Close");
+            }
+        }
 
         private ObservableCollection<LanguageEntry> _availableLanguageList = new ObservableCollection<LanguageEntry>();
         public ObservableCollection<LanguageEntry> AvailableLanguageList
@@ -155,7 +189,7 @@ namespace OCROverlay.ViewModel
 
         #region RelayCommands
 
-        public RelayCommand<ICloseable> CloseWindowCommand { get; private set; }
+        //public RelayCommand<ICloseable> CloseWindowCommand { get; private set; }
 
         #endregion //RelayCommands
     }

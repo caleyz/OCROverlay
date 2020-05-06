@@ -95,7 +95,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Events\ViewModelChangeEventArgs.cs" />
-    <Compile Include="Interfaces\ICloseable.cs" />
+    <Compile Include="Util\DialogCloser.cs" />
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\LanguageSelectionVM.cs" />

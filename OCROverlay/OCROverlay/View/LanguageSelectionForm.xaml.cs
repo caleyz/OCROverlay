@@ -97,7 +97,7 @@ namespace OCROverlay.View
         private void btn_confirm_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("confirm all button was clicked");
-            vm.ConfirmLanguages()
+            vm.ConfirmLanguages();
         }
     }
 }

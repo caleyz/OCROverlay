@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OCROverlay"
+        xmlns:ap="clr-namespace:OCROverlay.Util"
+        ap:DialogCloser.DialogResult="{Binding Close}"
         mc:Ignorable="d"
         Title="LanguageSelectionFomr" Height="450" Width="685.973" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
