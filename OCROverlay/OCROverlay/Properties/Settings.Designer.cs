@@ -34,5 +34,17 @@ namespace OCROverlay.Properties {
                 this["FirstRun"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelectedLanguages {
+            get {
+                return ((string)(this["SelectedLanguages"]));
+            }
+            set {
+                this["SelectedLanguages"] = value;
+            }
+        }
     }
 }

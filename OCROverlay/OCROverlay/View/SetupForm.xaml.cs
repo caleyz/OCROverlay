@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OCROverlay.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,57 +15,53 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace OCROverlay
+namespace OCROverlay.View
 {
     /// <summary>
     /// Interaction logic for FirstRun.xaml
     /// </summary>
-    public partial class FirstRunForm : Window
+    public partial class SetupForm : Window
     {
-        public FirstRunForm()
+        private readonly SetupVM vm;
+        public SetupForm()
         {            
             InitializeComponent();
-            this.Closing += new CancelEventHandler(FirstRun_Closing);
-            RunChecks();
+            vm = new SetupVM();
+            DataContext = vm;
+            this.Closing += new CancelEventHandler(SetupForm_Closing);
+            ImageSetup();
+            ScreenCheck();
         }
 
-        void FirstRun_Closing(object sender, CancelEventArgs e)
+        void SetupForm_Closing(object sender, CancelEventArgs e)
         {
             //closing code
         }
 
-        private void RunChecks()
+        private void ImageSetup()
         {
-            if (Screen.AllScreens.Length > 1)
-                btn_screens.IsEnabled = true;
-            else
-                img_screen_tick.Visibility = Visibility.Visible;
+            //for some reason setting image sources in XAML to the project Resources defaults it to the path C:\WINDOWS\system32... - Have to bypass
+            img_lang_cross.Source = img_screen_cross.Source =
+                new BitmapImage(new Uri("/OCROverlay;component/Resources/cross.png", UriKind.Relative));
+            img_lang_tick.Source = img_screen_tick.Source =
+                new BitmapImage(new Uri("/OCROverlay;component/Resources/tick.png", UriKind.Relative));
         }
 
-        private async void SetupLanguages()
+        private void ScreenCheck()
         {
-            ResetLanguageImages();
-            LanguageSelectionForm langForm = new LanguageSelectionForm();
-            langForm.ShowDialog();
-            bool value = await langForm.Fetch();
-            //if (value)
-            //    img_lang_tick.Visibility = Visibility.Visible;
-            //else
-            //    img_lang_cross.Visibility = Visibility.Visible;
-            //((FirstRunForm)System.Windows.Application.Current.FirstRunForm.UpdateLayout();
+            vm.ScreenCheck();            
+        }
+
+        private void SetupLanguages()
+        {            
+            vm.InitialiseLanguageForm();
         }
 
         private void ResetLanguageImages()
         {
             img_lang_tick.Visibility = Visibility.Hidden;
             img_lang_cross.Visibility = Visibility.Hidden;
-        }
-
-        private void ResetScreenImages()
-        {
-            img_screen_tick.Visibility = Visibility.Hidden;
-            img_screen_cross.Visibility = Visibility.Hidden;
-        }
+        }        
 
         private void btn_languages_Click(object sender, RoutedEventArgs e)
         {

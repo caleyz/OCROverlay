@@ -1,0 +1,41 @@
+﻿<Window x:Class="OCROverlay.View.LanguageSelectionForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OCROverlay"
+        mc:Ignorable="d"
+        Title="LanguageSelectionFomr" Height="450" Width="685.973" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ListBox x:Name="listBox_available_langs" 
+                 ItemsSource="{Binding AvailableLanguageList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="357" Margin="10,52,0,0" VerticalAlignment="Top" Width="250" SelectionMode="Multiple">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding LongName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ListBox x:Name="listBox_selected_langs" 
+                 ItemsSource="{Binding SelectedLanguageList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                 Height="357" Margin="410,52,0,0" VerticalAlignment="Top" Width="250" SelectionMode="Multiple">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding LongName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Label x:Name="lbl_available_lang" Content="Available Languages" HorizontalAlignment="Left" Margin="38,10,0,0" FontSize="20"  VerticalAlignment="Top" Width="190"/>
+        <Label x:Name="lbl_selected_lang" Content="Selected Languages" HorizontalAlignment="Left" Margin="445,10,0,0" FontSize="20"  VerticalAlignment="Top" Width="190"/>
+
+        <Button x:Name="btn_add" Content="Add &gt;&gt;" HorizontalAlignment="Left" Margin="272,80,0,0" VerticalAlignment="Top" Width="130" Height="34" FontSize="18" Click="btn_add_Click"/>
+        <Button x:Name="btn_add_all" Content="Add All" HorizontalAlignment="Left" Margin="272,124,0,0" VerticalAlignment="Top" Width="130" Height="34" FontSize="18" Click="btn_add_all_Click"/>
+
+        <Button x:Name="btn_remove" Content="&lt;&lt; Remove" HorizontalAlignment="Left" Margin="272,221,0,0" VerticalAlignment="Top" Width="130" Height="34" FontSize="18" Click="btn_remove_Click"/>
+        <Button x:Name="btn_remove_all" Content="Remove All" HorizontalAlignment="Left" Margin="272,265,0,0" VerticalAlignment="Top" Width="130" Height="34" FontSize="18" Click="btn_remove_all_Click"/>
+
+        <Button x:Name="btn_confirm" Content="Confirm" HorizontalAlignment="Left" Margin="272,348,0,0" VerticalAlignment="Top" Background="#FFC7C7FF" Width="130" Height="34" FontSize="18" Click="btn_confirm_Click"/>
+
+    </Grid>
+</Window>
