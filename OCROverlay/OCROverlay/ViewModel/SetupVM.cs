@@ -1,6 +1,9 @@
-﻿using OCROverlay.View;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using OCROverlay.Util;
+using OCROverlay.View;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +16,10 @@ namespace OCROverlay.ViewModel
     {
         public SetupVM()
         {
-            //do something
+            Properties.Settings.Default.Reset();
+            ScreenCheck();
+            DownloadLocationSetup();            
+            ///////////            
         }
 
         public void ResetLanguageImages()
@@ -24,6 +30,42 @@ namespace OCROverlay.ViewModel
         public void ResetScreenImages()
         {
             ScreenCrossVisibility = ScreenTickVisibility = Visibility.Hidden;
+        }
+
+        public void DownloadLocationSetup()
+        {
+            string finalPath;
+            if (String.IsNullOrEmpty(Properties.Settings.Default.DownloadLocation))
+            {
+                string basePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string myFolder = "OCROverlay\\DataPacks";
+                finalPath = Path.Combine(basePath, myFolder);
+                try
+                {
+                    System.IO.Directory.CreateDirectory(finalPath);
+                }
+                catch(Exception e)
+                {
+                    throw e;
+                }
+                Properties.Settings.Default.DownloadLocation = finalPath;
+                Properties.Settings.Default.Save();
+            }
+            else
+            {
+                finalPath = Properties.Settings.Default.DownloadLocation;
+            }
+            DownloadLocationText = finalPath;
+        }
+
+        public void ConfirmSettings()
+        {
+            //
+        }
+
+        public void ChooseScreen()
+        {
+            //
         }
 
         public void ScreenCheck()
@@ -42,7 +84,40 @@ namespace OCROverlay.ViewModel
             bool value = await langForm.Fetch();
         }
 
+        public void ChooseDownloadLocation()
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = Path.GetFullPath(Properties.Settings.Default.DownloadLocation);
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                Console.WriteLine("You selected: " + dialog.FileName);
+            }
+        }
+
+        #region Redirects
+
+        public void DownloadLocation_execute(object obj) => ChooseDownloadLocation();
+        public void SetupLanguages_execute(object obj) => InitialiseLanguageForm();
+        public void ChooseScreen_execute(object obj) => ChooseScreen();
+        public void Confirm_execute(object obj) => ConfirmSettings();
+
+        #endregion //Redirects
+
         #region Variables
+
+        private string _downloadLocationText = "";
+        public string DownloadLocationText
+        {
+            get { return _downloadLocationText; }
+            set
+            {
+                if (value == _downloadLocationText)
+                    return;
+                _downloadLocationText = value;
+                NotifyPropertyChanged("DownloadLocationText");
+            }
+        }
 
         private Boolean _screenButtonEnabled = false;
         public Boolean ScreenButtonEnabled
@@ -110,5 +185,29 @@ namespace OCROverlay.ViewModel
         }
 
         #endregion //Variables
+
+        #region CanExecute
+        private bool DownloadLocation_CanExecute(object obj) => true;
+        private bool SetupLanguages_CanExecute(object obj) => true;
+        private bool ChooseScreen_CanExecute(object obj) => ScreenButtonEnabled;
+        private bool Confirm_CanExecute(object obj) => true;
+
+        #endregion //CanExecute
+
+        #region RelayCommands
+
+        private RelayCommand _downloadLocationCommand;
+        public RelayCommand DownloadLocationCommand => _downloadLocationCommand ?? (_downloadLocationCommand = new RelayCommand(DownloadLocation_execute, DownloadLocation_CanExecute));
+
+        private RelayCommand _setupLanguagesCommand;
+        public RelayCommand SetupLanguagesCommand => _setupLanguagesCommand ?? (_setupLanguagesCommand = new RelayCommand(SetupLanguages_execute, SetupLanguages_CanExecute));
+
+        private RelayCommand _chooseScreenCommand;
+        public RelayCommand ChooseScreenCommand => _chooseScreenCommand ?? (_chooseScreenCommand = new RelayCommand(ChooseScreen_execute, ChooseScreen_CanExecute));
+
+        private RelayCommand _confirmCommand;
+        public RelayCommand ConfirmCommand => _confirmCommand ?? (_confirmCommand = new RelayCommand(Confirm_execute, Confirm_CanExecute));
+
+        #endregion //RelayCommands
     }
 }

@@ -25,7 +25,7 @@ namespace OCROverlay.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool FirstRun {
             get {
                 return ((bool)(this["FirstRun"]));
@@ -44,6 +44,18 @@ namespace OCROverlay.Properties {
             }
             set {
                 this["SelectedLanguages"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DownloadLocation {
+            get {
+                return ((string)(this["DownloadLocation"]));
+            }
+            set {
+                this["DownloadLocation"] = value;
             }
         }
     }

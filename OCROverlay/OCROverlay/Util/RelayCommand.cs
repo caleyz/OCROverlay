@@ -8,38 +8,35 @@ using System.Windows.Input;
 
 namespace OCROverlay.Util
 {
-    public class RelayCommand<T> : ICommand
+    public class RelayCommand : ICommand
     {
         #region Fields
-
-        readonly Action<T> _execute = null;
-        readonly Predicate<T> _canExecute = null;
-
+        readonly Action<object> _execute;
+        readonly Predicate<object> _canExecute;
         #endregion
 
+        //Fields 
         #region Constructors
-        public RelayCommand(Action<T> execute)
+
+        public RelayCommand(Action<object> execute)
             : this(execute, null)
         {
 
         }
 
-        public RelayCommand(Action<T> execute, Predicate<T> canExecute)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException("execute");
-
-            _execute = execute;
-            _canExecute = canExecute;
+            if (execute == null) throw new ArgumentNullException("execute");
+            _execute = execute; _canExecute = canExecute;
         }
-
         #endregion
 
-        #region ICommand Members
+        // Constructors 
+        #region ICommand Members [DebuggerStepThrough]
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute((T)parameter);
+            return _canExecute == null || _canExecute(parameter);
         }
 
         public event EventHandler CanExecuteChanged
@@ -50,7 +47,7 @@ namespace OCROverlay.Util
 
         public void Execute(object parameter)
         {
-            _execute((T)parameter);
+            _execute(parameter);
         }
 
         #endregion

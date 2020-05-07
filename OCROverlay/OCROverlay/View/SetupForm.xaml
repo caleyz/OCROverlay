@@ -9,17 +9,23 @@
         Height="320" 
         Width="480"
         WindowStartupLocation="CenterScreen" Background="White">
-    
     <Grid>
-        <Button x:Name="btn_languages" Content="Select Languages" HorizontalAlignment="Left" Margin="25,48,0,0" VerticalAlignment="Top" Width="201" Height="48" FontSize="24" Click="btn_languages_Click"/>
-        <Button x:Name="btn_screens" Content="Select Screen" HorizontalAlignment="Left" Margin="25,106,0,0" VerticalAlignment="Top" Width="201" Height="48" FontSize="24" Click="btn_screens_Click" IsEnabled="False"/>        
-        
+        <Button x:Name="btn_download_location" Content="Download Location" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50"
+         Margin="29,42,0,0" Command="{Binding DownloadLocationCommand}" FontSize="22"/>
+        <Button x:Name="btn_languages" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50"
+        FontSize="24" Content="Select Languages" Margin="29,100,0,0" Command="{Binding SetupLanguagesCommand}" />
+        <Button x:Name="btn_screens" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50"
+        FontSize="24" Content="Select Screen" Margin="29,158,0,0" Command="{Binding ChooseScreenCommand}" IsEnabled="{Binding ScreenButtonEnabled}"/>
+
         <Image x:Name="img_lang_tick" HorizontalAlignment="Left" Visibility="Hidden"  Height="48" Margin="321,48,0,0" VerticalAlignment="Top" Width="48"/>
         <Image x:Name="img_lang_cross" HorizontalAlignment="Left" Visibility="Hidden" Height="48" Margin="374,48,0,0" VerticalAlignment="Top" Width="48"/>
-        
+
         <Image x:Name="img_screen_tick" HorizontalAlignment="Left" Visibility="Hidden" Height="48" Margin="321,106,0,0" VerticalAlignment="Top" Width="48"/>
         <Image x:Name="img_screen_cross" HorizontalAlignment="Left" Visibility="Hidden" Height="48" Margin="374,101,0,0" VerticalAlignment="Top" Width="48"/>
-        
-        <Button x:Name="btn_confirm" Content="Confirm" HorizontalAlignment="Left" Margin="142,231,0,0" VerticalAlignment="Top" Width="201" Height="48" FontSize="24" Click="btn_confirm_Click"/>
+
+        <Button x:Name="btn_confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50"
+        FontSize="24" Content="Confirm" Margin="142,226,0,0" Command="{Binding ConfirmCommand}"/>
+
+        <TextBlock x:Name="lbl_download_location" HorizontalAlignment="Left"  Text="{Binding DownloadLocationText}" Margin="250,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="48" Width="212"/>
     </Grid>
 </Window>
