@@ -11,6 +11,7 @@ C# based OCR overlay program to automatically translate on screen text
 - WPF
 - HTMLAgilityPack
 - Python (for calling TesseractOCR functions)
+- WindowsAPICodePack-Shell (For FolderDialog which was removed by Microsoft)
 
 # TODO List
 - Grab language packs from Tesseract OCR page automatically
