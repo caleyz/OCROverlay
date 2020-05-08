@@ -8,9 +8,9 @@ namespace OCROverlay.Model
 {
     [Serializable()]
     public class LanguageEntry
-    {
-        public string ShortCode { get; set; }
+    {        
         public string LongName { get; set; }
+        public string ShortCode { get; set; }
         public string DatapackURL { get; set; }
     }
 }

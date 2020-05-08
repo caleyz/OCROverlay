@@ -49,55 +49,5 @@ namespace OCROverlay.View
             bool res = true;
             _tcs.SetResult(res);
         }        
-
-        private void btn_add_Click(object sender, RoutedEventArgs e)
-        {
-            if(listBox_available_langs.SelectedItems != null)
-            {
-                var items = listBox_available_langs.SelectedItems.OfType<LanguageEntry>().ToList(); //Can't modify observablecollection while enumerating, so copy
-                vm.AddSelectedItemsToListView(items);                
-                listBox_available_langs.UnselectAll();
-            }
-        }
-
-        private void btn_add_all_Click(object sender, RoutedEventArgs e)
-        {
-            string messageBoxText = "Are you sure you wish add all languages? Language packs are very large in size (10mb+ EACH) and adding all language packs will result in downloading ~1GB of data";
-            string caption = "Warning";
-            MessageBoxButton button = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.Warning;
-            MessageBoxResult result = MessageBox.Show(messageBoxText, caption, button, icon);
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-                    vm.AddAllLanguages();
-                    break;
-                case MessageBoxResult.No:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void btn_remove_Click(object sender, RoutedEventArgs e)
-        {
-            if(listBox_selected_langs.SelectedItems != null)
-            {
-                var items = listBox_selected_langs.SelectedItems.OfType<LanguageEntry>().ToList(); //Can't modify observablecollection while enumerating, so copy
-                vm.RemoveSelectedItemsFromListView(items);
-                listBox_selected_langs.UnselectAll();
-            }
-        }
-
-        private void btn_remove_all_Click(object sender, RoutedEventArgs e)
-        {
-            vm.RemoveAllLanguages();
-        }
-
-        private void btn_confirm_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("confirm all button was clicked");
-            vm.ConfirmLanguages();
-        }
     }
 }

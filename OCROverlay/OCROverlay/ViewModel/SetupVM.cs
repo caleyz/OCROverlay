@@ -93,16 +93,7 @@ namespace OCROverlay.ViewModel
             {
                 Console.WriteLine("You selected: " + dialog.FileName);
             }
-        }
-
-        #region Redirects
-
-        public void DownloadLocation_execute(object obj) => ChooseDownloadLocation();
-        public void SetupLanguages_execute(object obj) => InitialiseLanguageForm();
-        public void ChooseScreen_execute(object obj) => ChooseScreen();
-        public void Confirm_execute(object obj) => ConfirmSettings();
-
-        #endregion //Redirects
+        }        
 
         #region Variables
 
@@ -185,6 +176,15 @@ namespace OCROverlay.ViewModel
         }
 
         #endregion //Variables
+
+        #region Redirects
+
+        public void DownloadLocation_execute(object obj) => ChooseDownloadLocation();
+        public void SetupLanguages_execute(object obj) => InitialiseLanguageForm();
+        public void ChooseScreen_execute(object obj) => ChooseScreen();
+        public void Confirm_execute(object obj) => ConfirmSettings();
+
+        #endregion //Redirects
 
         #region CanExecute
         private bool DownloadLocation_CanExecute(object obj) => true;

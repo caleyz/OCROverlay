@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 
 namespace OCROverlay.ViewModel
 {
@@ -47,12 +48,7 @@ namespace OCROverlay.ViewModel
                                 languageEntries.Add(currentEntry);
                             }
 
-            //foreach(LanguageEntry entry in languageEntries)
-            //{
-            //    Console.WriteLine("{0}:{1}:{2}", entry.shortCode, entry.longName, entry.datapackURL);
-            //}
-
-            AvailableLanguageList = new ObservableCollection<LanguageEntry>(languageEntries);
+            AvailableLanguageList = new ObservableCollection<LanguageEntry>(languageEntries.OrderBy(x => x.LongName));
             SelectedLanguageList = new ObservableCollection<LanguageEntry>();
             RetrieveSavedLanguages();
         }
@@ -87,22 +83,26 @@ namespace OCROverlay.ViewModel
         {
             using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(Properties.Settings.Default.SelectedLanguages)))
             {
-                BinaryFormatter bf = new BinaryFormatter();
-                ObservableCollection<LanguageEntry> holder = (ObservableCollection<LanguageEntry>)bf.Deserialize(ms);
-                if (holder.Count > 0)
+                if (ms.Length != 0)
                 {
-                    foreach (LanguageEntry entry in holder)
+                    BinaryFormatter bf = new BinaryFormatter();
+                    ObservableCollection<LanguageEntry> holder = (ObservableCollection<LanguageEntry>)bf.Deserialize(ms);
+                    if (holder.Count > 0)
                     {
-                        SelectedLanguageList.Add(entry);
-                        AvailableLanguageList.Remove(AvailableLanguageList.Where(i => i.LongName == entry.LongName).Single());
+                        foreach (LanguageEntry entry in holder)
+                        {
+                            SelectedLanguageList.Add(entry);
+                            AvailableLanguageList.Remove(AvailableLanguageList.Where(i => i.LongName == entry.LongName).Single());
+                        }
                     }
                 }
             }
         }
 
-        public void AddSelectedItemsToListView(List<LanguageEntry> languageEntries)
+        public void AddSelectedItemsToListView(ObservableCollection<LanguageEntry> languageEntries)
         {
-            foreach (LanguageEntry item in languageEntries)
+            List<LanguageEntry> languageEntryHolder = languageEntries.ToList();
+            foreach (LanguageEntry item in languageEntryHolder)
             {
                 SelectedLanguageList.Add(item);
                 AvailableLanguageList.Remove(item);
@@ -111,9 +111,10 @@ namespace OCROverlay.ViewModel
             SelectedLanguageList = new ObservableCollection<LanguageEntry>(sortList);
         }
 
-        public void RemoveSelectedItemsFromListView(List<LanguageEntry> languageEntries)
+        public void RemoveSelectedItemsFromListView(ObservableCollection<LanguageEntry> languageEntries)
         {
-            foreach (LanguageEntry item in languageEntries)
+            List<LanguageEntry> languageEntryHolder = languageEntries.ToList();
+            foreach (LanguageEntry item in languageEntryHolder)
             {
                 SelectedLanguageList.Remove(item);
                 AvailableLanguageList.Add(item);
@@ -122,17 +123,39 @@ namespace OCROverlay.ViewModel
             AvailableLanguageList = new ObservableCollection<LanguageEntry>(sortList);
         }
 
+        public bool ShowWarningMessageBox()
+        {
+            bool retVal = false;
+            string messageBoxText = "Are you sure you wish add all languages? Language packs are very large in size (10mb+ EACH) and adding all language packs will result in downloading ~1GB of data";
+            string caption = "Warning";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result = MessageBox.Show(messageBoxText, caption, button, icon);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    retVal = true;
+                    break;
+                default:
+                    break;
+            }
+            return retVal;
+        }
+
         public void AddAllLanguages()
         {
-            //Could possibly just create a variable to store all available langugages
-            List<LanguageEntry> tempAvailList = AvailableLanguageList.ToList();
-            List<LanguageEntry> tempSelectList = SelectedLanguageList.ToList();
-            List<LanguageEntry> fullList = new List<LanguageEntry>();
-            fullList.AddRange(tempAvailList);
-            fullList.AddRange(tempSelectList);
-            AvailableLanguageList.Clear();
-            var sortList = fullList.OrderBy(x => x.LongName);
-            SelectedLanguageList = new ObservableCollection<LanguageEntry>(sortList);
+            if (ShowWarningMessageBox())
+            {
+                //Could possibly just create a variable to store all available langugages
+                List<LanguageEntry> tempAvailList = AvailableLanguageList.ToList();
+                List<LanguageEntry> tempSelectList = SelectedLanguageList.ToList();
+                List<LanguageEntry> fullList = new List<LanguageEntry>();
+                fullList.AddRange(tempAvailList);
+                fullList.AddRange(tempSelectList);
+                AvailableLanguageList.Clear();
+                var sortList = fullList.OrderBy(x => x.LongName);
+                SelectedLanguageList = new ObservableCollection<LanguageEntry>(sortList);
+            }
         }
 
         public void RemoveAllLanguages()
@@ -159,6 +182,32 @@ namespace OCROverlay.ViewModel
                     return;
                 _close = value;
                 NotifyPropertyChanged("Close");
+            }
+        }
+
+        private ObservableCollection<LanguageEntry> _availableLanguageListItems = new ObservableCollection<LanguageEntry>();
+        public ObservableCollection<LanguageEntry> AvailableLanguageListItems
+        {
+            get { return _availableLanguageListItems; }
+            set
+            {
+                if (value == _availableLanguageListItems)
+                    return;
+                _availableLanguageListItems = value;
+                NotifyPropertyChanged("AvailableLanguageListItems");
+            }
+        }
+
+        private ObservableCollection<LanguageEntry> _selectedLanguageListItems = new ObservableCollection<LanguageEntry>();
+        public ObservableCollection<LanguageEntry> SelectedLanguageListItems
+        {
+            get { return _selectedLanguageListItems; }
+            set
+            {
+                if (value == _selectedLanguageListItems)
+                    return;
+                _selectedLanguageListItems = value;
+                NotifyPropertyChanged("SelectedLanguageListItems");
             }
         }
 
@@ -190,9 +239,41 @@ namespace OCROverlay.ViewModel
 
         #endregion //Variables
 
+        #region Redirects
+
+        public void AddLanguages_execute(object obj) => AddSelectedItemsToListView(AvailableLanguageListItems);
+        public void AddAllLanguages_execute(object obj) => AddAllLanguages();
+        public void RemoveLanguages_execute(object obj) => RemoveSelectedItemsFromListView(SelectedLanguageListItems);
+        public void RemoveAllLanguages_execute(object obj) => RemoveAllLanguages();
+        public void Confirm_execute(object obj) => ConfirmLanguages();
+
+        #endregion //Redirects
+
+        #region CanExecute
+        private bool AddLanguages_CanExecute(object obj) => true;
+        private bool AddAllLanguages_CanExecute(object obj) => true;
+        private bool RemoveLanguages_CanExecute(object obj) => true;
+        private bool RemoveAllLanguages_CanExecute(object obj) => true;
+        private bool Confirm_CanExecute(object obj) => true;
+
+        #endregion //CanExecute
+
         #region RelayCommands
 
-        //public RelayCommand<ICloseable> CloseWindowCommand { get; private set; }
+        private RelayCommand _addLanguagesCommand;
+        public RelayCommand AddLanguagesCommand => _addLanguagesCommand ?? (_addLanguagesCommand = new RelayCommand(AddLanguages_execute, AddLanguages_CanExecute));
+
+        private RelayCommand _addAllLanguagesCommand;
+        public RelayCommand AddAllLanguagesCommand => _addAllLanguagesCommand ?? (_addAllLanguagesCommand = new RelayCommand(AddAllLanguages_execute, AddAllLanguages_CanExecute));
+
+        private RelayCommand _removeLanguagesCommand;
+        public RelayCommand RemoveLanguagesCommand => _removeLanguagesCommand ?? (_removeLanguagesCommand = new RelayCommand(RemoveLanguages_execute, RemoveLanguages_CanExecute));
+
+        private RelayCommand _removeAllLanguagesCommand;
+        public RelayCommand RemoveAllLanguagesCommand => _removeAllLanguagesCommand ?? (_removeAllLanguagesCommand = new RelayCommand(RemoveAllLanguages_execute, RemoveAllLanguages_CanExecute));
+
+        private RelayCommand _confirmCommand;
+        public RelayCommand ConfirmCommand => _confirmCommand ?? (_confirmCommand = new RelayCommand(Confirm_execute, Confirm_CanExecute));
 
         #endregion //RelayCommands
     }
