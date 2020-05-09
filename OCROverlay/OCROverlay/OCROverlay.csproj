@@ -104,6 +104,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Events\ViewModelChangeEventArgs.cs" />
+    <Compile Include="Model\ScreenEntry.cs" />
     <Compile Include="Util\DialogCloser.cs" />
     <Compile Include="Util\MultiSelectionBehaviour.cs" />
     <Compile Include="Util\RelayCommand.cs" />

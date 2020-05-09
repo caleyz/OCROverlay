@@ -40,9 +40,9 @@ namespace OCROverlay.View
         private void ImageSetup()
         {
             //for some reason setting image sources in XAML to the project Resources defaults it to the path C:\WINDOWS\system32... - Have to bypass
-            img_lang_cross.Source = img_screen_cross.Source =
+            img_lang_cross.Source = 
                 new BitmapImage(new Uri("/OCROverlay;component/Resources/cross.png", UriKind.Relative));
-            img_lang_tick.Source = img_screen_tick.Source =
+            img_lang_tick.Source =
                 new BitmapImage(new Uri("/OCROverlay;component/Resources/tick.png", UriKind.Relative));
         }
     }

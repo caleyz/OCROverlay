@@ -1,8 +1,10 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using OCROverlay.Model;
 using OCROverlay.Util;
 using OCROverlay.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -63,17 +65,18 @@ namespace OCROverlay.ViewModel
             //
         }
 
-        public void ChooseScreen()
-        {
-            //
-        }
-
         public void ScreenCheck()
         {
-            if (Screen.AllScreens.Length > 1)
-                ScreenButtonEnabled = true;
-            else
-                ScreenTickVisibility = Visibility.Visible;
+            ObservableCollection<Screen> screenHolder = new ObservableCollection<Screen>(Screen.AllScreens);
+            foreach (Screen screen in screenHolder)
+            {
+                ScreenEntry newScreen = new ScreenEntry();
+                newScreen.DeviceName = screen.DeviceName.Substring(4);
+                newScreen.Height = screen.Bounds.Height;
+                newScreen.Width = screen.Bounds.Width;
+                newScreen.CombinedValue = String.Format("{0} ({1}x{2})", newScreen.DeviceName, newScreen.Width, newScreen.Height);
+                ScreenList.Add(newScreen);
+            }
         }
 
         public async void InitialiseLanguageForm()
@@ -93,9 +96,35 @@ namespace OCROverlay.ViewModel
             {
                 Console.WriteLine("You selected: " + dialog.FileName);
             }
-        }        
+        }
 
         #region Variables
+
+        private ObservableCollection<ScreenEntry> _screenList = new ObservableCollection<ScreenEntry>();
+        public ObservableCollection<ScreenEntry> ScreenList
+        {
+            get { return _screenList; }
+            set
+            {
+                if (value == _screenList)
+                    return;
+                _screenList = value;
+                NotifyPropertyChanged("ScreenList");
+            }
+        }
+
+        private ScreenEntry _screenListSelected = new ScreenEntry();
+        public ScreenEntry ScreenListSelected
+        {
+            get { return _screenListSelected; }
+            set
+            {
+                if (value == _screenListSelected)
+                    return;
+                _screenListSelected = value;
+                NotifyPropertyChanged("ScreenListSelected");
+            }
+        }
 
         private string _downloadLocationText = "";
         public string DownloadLocationText
@@ -107,19 +136,6 @@ namespace OCROverlay.ViewModel
                     return;
                 _downloadLocationText = value;
                 NotifyPropertyChanged("DownloadLocationText");
-            }
-        }
-
-        private Boolean _screenButtonEnabled = false;
-        public Boolean ScreenButtonEnabled
-        {
-            get { return _screenButtonEnabled; }
-            set
-            {
-                if (value == _screenButtonEnabled)
-                    return;
-                _screenButtonEnabled = value;
-                NotifyPropertyChanged("ScreenButtonEnabled");
             }
         }
 
@@ -181,7 +197,6 @@ namespace OCROverlay.ViewModel
 
         public void DownloadLocation_execute(object obj) => ChooseDownloadLocation();
         public void SetupLanguages_execute(object obj) => InitialiseLanguageForm();
-        public void ChooseScreen_execute(object obj) => ChooseScreen();
         public void Confirm_execute(object obj) => ConfirmSettings();
 
         #endregion //Redirects
@@ -189,7 +204,6 @@ namespace OCROverlay.ViewModel
         #region CanExecute
         private bool DownloadLocation_CanExecute(object obj) => true;
         private bool SetupLanguages_CanExecute(object obj) => true;
-        private bool ChooseScreen_CanExecute(object obj) => ScreenButtonEnabled;
         private bool Confirm_CanExecute(object obj) => true;
 
         #endregion //CanExecute
@@ -201,9 +215,6 @@ namespace OCROverlay.ViewModel
 
         private RelayCommand _setupLanguagesCommand;
         public RelayCommand SetupLanguagesCommand => _setupLanguagesCommand ?? (_setupLanguagesCommand = new RelayCommand(SetupLanguages_execute, SetupLanguages_CanExecute));
-
-        private RelayCommand _chooseScreenCommand;
-        public RelayCommand ChooseScreenCommand => _chooseScreenCommand ?? (_chooseScreenCommand = new RelayCommand(ChooseScreen_execute, ChooseScreen_CanExecute));
 
         private RelayCommand _confirmCommand;
         public RelayCommand ConfirmCommand => _confirmCommand ?? (_confirmCommand = new RelayCommand(Confirm_execute, Confirm_CanExecute));
