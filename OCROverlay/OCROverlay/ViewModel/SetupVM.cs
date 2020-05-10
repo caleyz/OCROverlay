@@ -11,11 +11,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace OCROverlay.ViewModel
 {
     public class SetupVM : BaseViewModel
     {
+        private Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
         public SetupVM()
         {
             Properties.Settings.Default.Reset();
@@ -85,6 +87,17 @@ namespace OCROverlay.ViewModel
             LanguageSelectionForm langForm = new LanguageSelectionForm();
             langForm.ShowDialog();
             bool value = await langForm.Fetch();
+            Console.WriteLine(value);
+            if (value)
+            {
+                //dispatcher.Invoke(new Action(() => { LanguageTickVisibility = Visibility.Visible; }), DispatcherPriority.Normal);
+                LanguageTickVisibility = Visibility.Visible;
+            }
+            else
+            {
+                //dispatcher.Invoke(new Action(() => { LanguageCrossVisibility = Visibility.Visible; }), DispatcherPriority.Normal);
+                LanguageCrossVisibility = Visibility.Visible;
+            }
         }
 
         public void ChooseDownloadLocation()

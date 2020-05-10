@@ -46,7 +46,8 @@ namespace OCROverlay.View
         {
             Console.WriteLine("Language Selection Form Closing");
             //bool res = selectedLanguagesList.Count >= 2 ? true : false;
-            bool res = true;
+            vm.SaveSelectedLanguages();
+            bool res = vm.GetSelectedLanguageCount();
             _tcs.SetResult(res);
         }        
     }

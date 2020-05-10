@@ -17,8 +17,8 @@
         <TextBlock x:Name="btn_screens" HorizontalAlignment="Left" VerticalAlignment="Top" Width="144" Height="32"
         FontSize="24" Text="Select Screen" Margin="35,170,0,0"/>
 
-        <Image x:Name="img_lang_tick" HorizontalAlignment="Left" Visibility="Hidden"  Height="48" Margin="321,48,0,0" VerticalAlignment="Top" Width="48"/>
-        <Image x:Name="img_lang_cross" HorizontalAlignment="Left" Visibility="Hidden" Height="48" Margin="374,48,0,0" VerticalAlignment="Top" Width="48"/>
+        <Image x:Name="img_lang_tick" HorizontalAlignment="Left" Visibility="{Binding LanguageTickVisibility}" Height="48" ToolTip="You chose 2 or more languages" Margin="303,101,0,0" VerticalAlignment="Top" Width="48"/>
+        <Image x:Name="img_lang_cross" HorizontalAlignment="Left" Visibility="{Binding LanguageCrossVisibility}" ToolTip="You need to choose 2 or more languages" Height="48" Margin="372,101,0,0" VerticalAlignment="Top" Width="48"/>
 
         <!--<Image x:Name="img_screen_tick" HorizontalAlignment="Left" Visibility="Hidden" Height="48" Margin="321,106,0,0" VerticalAlignment="Top" Width="48"/>
         <Image x:Name="img_screen_cross" HorizontalAlignment="Left" Visibility="Hidden" Height="48" Margin="374,101,0,0" VerticalAlignment="Top" Width="48"/>-->

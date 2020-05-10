@@ -57,17 +57,8 @@ namespace OCROverlay.ViewModel
         {
             if(SelectedLanguageList.Count >= 2)
             {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    bf.Serialize(ms, SelectedLanguageList);
-                    ms.Position = 0;
-                    byte[] buffer = new byte[(int)ms.Length];
-                    ms.Read(buffer, 0, buffer.Length);
-                    Properties.Settings.Default.SelectedLanguages = Convert.ToBase64String(buffer);
-                    Properties.Settings.Default.Save();
-                    Close = true;
-                }
+                SaveSelectedLanguages();
+                Close = true;                
             }
             else
             {
@@ -97,6 +88,25 @@ namespace OCROverlay.ViewModel
                     }
                 }
             }
+        }
+
+        public void SaveSelectedLanguages()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(ms, SelectedLanguageList);
+                ms.Position = 0;
+                byte[] buffer = new byte[(int)ms.Length];
+                ms.Read(buffer, 0, buffer.Length);
+                Properties.Settings.Default.SelectedLanguages = Convert.ToBase64String(buffer);
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public bool GetSelectedLanguageCount()
+        {
+            return SelectedLanguageList.Count >= 2 ? true : false;
         }
 
         public void AddSelectedItemsToListView(ObservableCollection<LanguageEntry> languageEntries)
