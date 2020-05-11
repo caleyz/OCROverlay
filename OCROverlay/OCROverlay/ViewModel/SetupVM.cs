@@ -5,6 +5,7 @@ using OCROverlay.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -86,9 +87,27 @@ namespace OCROverlay.ViewModel
                 return;
             }
             Properties.Settings.Default.FirstRun = false;
-            Properties.Settings.Default.Save();
-            Close = true;
-            System.Windows.Forms.Application.Restart();
+            Properties.Settings.Default.Save();            
+            RestartApp(Process.GetCurrentProcess().Id, Process.GetCurrentProcess().ProcessName);
+            //System.Windows.Forms.Application.Restart();
+            ChangeViewModel("MainWindowVM", new object());
+        }
+
+        static void RestartApp(int pid, string applicationName)
+        {
+            // Wait for the process to terminate
+            Process process = null;
+            try
+            {
+                process = Process.GetProcessById(pid);
+                process.WaitForExit(1000);
+            }
+            catch (ArgumentException ex)
+            {
+                // ArgumentException to indicate that the 
+                // process doesn't exist?   LAME!!
+            }
+            Process.Start(applicationName, "");
         }
 
         public void ScreenCheck()
