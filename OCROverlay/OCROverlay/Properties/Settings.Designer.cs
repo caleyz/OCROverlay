@@ -58,5 +58,17 @@ namespace OCROverlay.Properties {
                 this["DownloadLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ChosenScreen {
+            get {
+                return ((string)(this["ChosenScreen"]));
+            }
+            set {
+                this["ChosenScreen"] = value;
+            }
+        }
     }
 }

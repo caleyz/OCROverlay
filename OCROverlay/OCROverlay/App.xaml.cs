@@ -15,6 +15,7 @@ namespace OCROverlay
     {
         public App()
         {
+            //OCROverlay.Properties.Settings.Default.Reset();
             Console.WriteLine("App ran");
             Setup();            
         }
@@ -26,16 +27,12 @@ namespace OCROverlay
             {
                 Console.WriteLine("Was true");
                 StartupUri = new Uri("/OCROverlay;component/View/SetupForm.xaml", UriKind.Relative);
-                //OCROverlay.Properties.Settings.Default.FirstRun = false;
-                //OCROverlay.Properties.Settings.Default.Save();
             }
             else
             {
                 Console.WriteLine("Was false");
                 StartupUri = new Uri("/OCROverlay;component/View/MainWindow.xaml", UriKind.Relative);
             }
-            //OCROverlay.Properties.Settings.Default.FirstRun = true;
-            //OCROverlay.Properties.Settings.Default.Save();
         }
     }
 }

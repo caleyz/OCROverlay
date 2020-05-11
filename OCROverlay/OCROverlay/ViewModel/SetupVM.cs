@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,8 +20,7 @@ namespace OCROverlay.ViewModel
     {
         private Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
         public SetupVM()
-        {
-            Properties.Settings.Default.Reset();
+        {            
             ScreenCheck();
             DownloadLocationSetup();            
             ///////////            
@@ -62,9 +62,33 @@ namespace OCROverlay.ViewModel
             DownloadLocationText = finalPath;
         }
 
+        public void SaveSelectedScreen()
+        {
+            Screen chosenScreen = Screen.AllScreens.Where(x => x.DeviceName.Substring(4) == ScreenListSelected.DeviceName).FirstOrDefault();
+            Properties.Settings.Default.ChosenScreen = chosenScreen.DeviceName;
+        }
+
         public void ConfirmSettings()
         {
-            //
+            //Should probably clean this up
+            if(ScreenListSelected != null)
+                SaveSelectedScreen();
+            else
+            {
+                return;
+            }
+            if (!String.IsNullOrEmpty(Properties.Settings.Default.SelectedLanguages))
+            {
+                //
+            }
+            else
+            {
+                return;
+            }
+            Properties.Settings.Default.FirstRun = false;
+            Properties.Settings.Default.Save();
+            Close = true;
+            System.Windows.Forms.Application.Restart();
         }
 
         public void ScreenCheck()
@@ -79,6 +103,7 @@ namespace OCROverlay.ViewModel
                 newScreen.CombinedValue = String.Format("{0} ({1}x{2})", newScreen.DeviceName, newScreen.Width, newScreen.Height);
                 ScreenList.Add(newScreen);
             }
+            ScreenListSelected = ScreenList[0];
         }
 
         public async void InitialiseLanguageForm()
@@ -112,6 +137,19 @@ namespace OCROverlay.ViewModel
         }
 
         #region Variables
+
+        private bool _close = false;
+        public bool Close
+        {
+            get { return _close; }
+            set
+            {
+                if (value == _close)
+                    return;
+                _close = value;
+                NotifyPropertyChanged("Close");
+            }
+        }
 
         private ObservableCollection<ScreenEntry> _screenList = new ObservableCollection<ScreenEntry>();
         public ObservableCollection<ScreenEntry> ScreenList

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OCROverlay.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -21,9 +22,12 @@ namespace OCROverlay.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainWindowVM vm;
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            vm = new MainWindowVM();
+            DataContext = vm;
         }        
     }
 }

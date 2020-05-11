@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OCROverlay"
+        xmlns:ap="clr-namespace:OCROverlay.Util"
+        ap:DialogCloser.DialogResult="{Binding Close}"
         mc:Ignorable="d"
         Title="Program Setup" 
         Height="320" 
-        Width="499.902"
+        Width="500"
         WindowStartupLocation="CenterScreen" Background="White">
     <Grid>
         <Button x:Name="btn_download_location" Content="Download Location" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50"

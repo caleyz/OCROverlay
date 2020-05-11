@@ -110,6 +110,7 @@
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\LanguageSelectionVM.cs" />
+    <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\SetupVM.cs" />
     <Compile Include="View\SetupForm.xaml.cs">
       <DependentUpon>SetupForm.xaml</DependentUpon>
