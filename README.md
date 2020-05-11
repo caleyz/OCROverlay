@@ -14,7 +14,7 @@ C# based OCR overlay program to automatically translate on screen text
 - WindowsAPICodePack-Shell (For FolderDialog which was removed by Microsoft)
 
 # TODO List
-- ~~Grab language packs from Tesseract OCR page automatically
+- ~~Grab language packs from Tesseract OCR page automatically~~
 - Implement Transparent Overlay
 - Create Installer/Uninstaller
 - Reorganise folder structure
