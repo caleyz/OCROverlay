@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace OCROverlay.ViewModel
@@ -35,6 +36,16 @@ namespace OCROverlay.ViewModel
         public void ResetScreenImages()
         {
             ScreenCrossVisibility = ScreenTickVisibility = Visibility.Hidden;
+        }
+
+        public void ChooseHotkey()
+        {
+            bool isPressed = false;
+            KeysPressedText = "Press Keys";
+            while (!isPressed)
+            {
+                
+            }
         }
 
         public void DownloadLocationSetup()
@@ -104,8 +115,7 @@ namespace OCROverlay.ViewModel
             }
             catch (ArgumentException ex)
             {
-                // ArgumentException to indicate that the 
-                // process doesn't exist?   LAME!!
+                // ArgumentException to indicate that the process doesn't exist
             }
             Process.Start(applicationName, "");
         }
@@ -155,6 +165,20 @@ namespace OCROverlay.ViewModel
             }
         }
 
+        public void KeyDownEventStart(object obj)
+        {
+            System.Windows.Input.KeyEventArgs args = (System.Windows.Input.KeyEventArgs)obj;
+            Console.WriteLine("Hello World Down");
+            
+        }
+
+        public void KeyUpEventStart(object obj)
+        {
+            System.Windows.Input.KeyEventArgs args = (System.Windows.Input.KeyEventArgs)obj;
+            Console.WriteLine("Hello World Up");
+
+        }
+
         #region Variables
 
         private bool _close = false;
@@ -193,6 +217,19 @@ namespace OCROverlay.ViewModel
                     return;
                 _screenListSelected = value;
                 NotifyPropertyChanged("ScreenListSelected");
+            }
+        }
+
+        private string _keysPressedText = "";
+        public string KeysPressedText
+        {
+            get { return _keysPressedText; }
+            set
+            {
+                if (value == _keysPressedText)
+                    return;
+                _keysPressedText = value;
+                NotifyPropertyChanged("KeysPressedText");
             }
         }
 
@@ -267,14 +304,20 @@ namespace OCROverlay.ViewModel
 
         public void DownloadLocation_execute(object obj) => ChooseDownloadLocation();
         public void SetupLanguages_execute(object obj) => InitialiseLanguageForm();
+        public void ChooseHotkey_execute(object obj) => ChooseHotkey();
         public void Confirm_execute(object obj) => ConfirmSettings();
+        public void KeyDownEvent_execute(object obj) => KeyDownEventStart(obj);
+        public void KeyUpEvent_execute(object obj) => KeyUpEventStart(obj);
 
         #endregion //Redirects
 
         #region CanExecute
         private bool DownloadLocation_CanExecute(object obj) => true;
         private bool SetupLanguages_CanExecute(object obj) => true;
+        private bool ChooseHotkey_CanExecute(object obj) => true;
         private bool Confirm_CanExecute(object obj) => true;
+        private bool KeyDownEvent_CanExecute(object obj) => true;
+        private bool KeyUpEvent_CanExecute(object obj) => true;
 
         #endregion //CanExecute
 
@@ -286,8 +329,17 @@ namespace OCROverlay.ViewModel
         private RelayCommand _setupLanguagesCommand;
         public RelayCommand SetupLanguagesCommand => _setupLanguagesCommand ?? (_setupLanguagesCommand = new RelayCommand(SetupLanguages_execute, SetupLanguages_CanExecute));
 
+        private RelayCommand _chooseHotkeyCommand;
+        public RelayCommand ChooseHotkeyCommand => _chooseHotkeyCommand ?? (_chooseHotkeyCommand = new RelayCommand(ChooseHotkey_execute, ChooseHotkey_CanExecute));
+
         private RelayCommand _confirmCommand;
         public RelayCommand ConfirmCommand => _confirmCommand ?? (_confirmCommand = new RelayCommand(Confirm_execute, Confirm_CanExecute));
+
+        private RelayCommand _keyDownEvent;
+        public RelayCommand KeyDownEvent => _keyDownEvent ?? (_keyDownEvent = new RelayCommand(KeyDownEvent_execute, KeyDownEvent_CanExecute));
+
+        private RelayCommand _keyUpEvent;
+        public RelayCommand KeyUpEvent => _keyUpEvent ?? (_keyUpEvent = new RelayCommand(KeyUpEvent_execute, KeyUpEvent_CanExecute));
 
         #endregion //RelayCommands
     }

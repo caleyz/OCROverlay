@@ -15,7 +15,7 @@ namespace OCROverlay
     {
         public App()
         {
-            //OCROverlay.Properties.Settings.Default.Reset();
+            OCROverlay.Properties.Settings.Default.Reset();
             Console.WriteLine("App ran");
             Setup();            
         }
