@@ -41,7 +41,7 @@
 
         <TextBlock x:Name="lbl_download_location" HorizontalAlignment="Left"  Text="{Binding DownloadLocationText}" Margin="235,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="48" Width="227"/>
 
-        <TextBlock x:Name="lbl_keys_pressed" HorizontalAlignment="Left"  Text="{Binding KeysPressedText}" Margin="235,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="52" Width="227"/>
+        <TextBlock x:Name="lbl_keys_pressed" HorizontalAlignment="Left"  Text="{Binding KeysPressedText}" Margin="235,95,0,0" FontSize="24" TextWrapping="Wrap" VerticalAlignment="Top" Height="52" Width="227"/>
 
         <ComboBox x:Name="cmbBox_screens" ItemsSource="{Binding ScreenList}" SelectedItem="{Binding ScreenListSelected}" Margin="226,212,0,0" SelectedIndex="0" Width="250" Height="43" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ComboBox.ItemTemplate>

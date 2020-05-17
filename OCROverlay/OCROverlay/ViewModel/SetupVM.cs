@@ -36,17 +36,7 @@ namespace OCROverlay.ViewModel
         public void ResetScreenImages()
         {
             ScreenCrossVisibility = ScreenTickVisibility = Visibility.Hidden;
-        }
-
-        public void ChooseHotkey()
-        {
-            bool isPressed = false;
-            KeysPressedText = "Press Keys";
-            while (!isPressed)
-            {
-                
-            }
-        }
+        }        
 
         public void DownloadLocationSetup()
         {
@@ -165,18 +155,49 @@ namespace OCROverlay.ViewModel
             }
         }
 
+        public void ChooseHotkey()
+        {
+            HotkeyList = new List<Key>();
+            HotkeyReady = true;
+            KeysPressedText = "Press Keys";
+        }
+
         public void KeyDownEventStart(object obj)
         {
-            System.Windows.Input.KeyEventArgs args = (System.Windows.Input.KeyEventArgs)obj;
-            Console.WriteLine("Hello World Down");
-            
+            if (HotkeyReady)
+            {
+                System.Windows.Input.KeyEventArgs args = (System.Windows.Input.KeyEventArgs)obj;
+                if (WatchedKey == Key.None)
+                {
+                    WatchedKey = args.Key;
+                    HotkeyList.Add(args.Key);
+                }
+                else
+                {
+                    HotkeyList.Add(args.Key);
+                }
+            }
         }
 
         public void KeyUpEventStart(object obj)
         {
-            System.Windows.Input.KeyEventArgs args = (System.Windows.Input.KeyEventArgs)obj;
-            Console.WriteLine("Hello World Up");
+            if (HotkeyReady)
+            {
+                System.Windows.Input.KeyEventArgs args = (System.Windows.Input.KeyEventArgs)obj;
+                if(args.Key == WatchedKey)
+                {
+                    foreach (Key key in HotkeyList) 
+                    {
+                        if (KeysPressedText == "Press Keys")
+                            KeysPressedText = key.ToString();
+                        else
+                            KeysPressedText += " + " + key.ToString();
+                    }
+                    HotkeyReady = false;
+                    WatchedKey = new Key();
 
+                }
+            }
         }
 
         #region Variables
@@ -191,6 +212,45 @@ namespace OCROverlay.ViewModel
                     return;
                 _close = value;
                 NotifyPropertyChanged("Close");
+            }
+        }
+
+        private bool _hotkeyReady = false;
+        public bool HotkeyReady
+        {
+            get { return _hotkeyReady; }
+            set
+            {
+                if (value == _hotkeyReady)
+                    return;
+                _hotkeyReady = value;
+                NotifyPropertyChanged("HotkeyReady");
+            }
+        }
+
+        private Key _watchedKey = new Key();
+        public Key WatchedKey
+        {
+            get { return _watchedKey; }
+            set
+            {
+                if (value == _watchedKey)
+                    return;
+                _watchedKey = value;
+                NotifyPropertyChanged("WatchedKey");
+            }
+        }
+
+        private List<Key> _hotkeyList = new List<Key>();
+        public List<Key> HotkeyList
+        {
+            get { return _hotkeyList; }
+            set
+            {
+                if (value == _hotkeyList)
+                    return;
+                _hotkeyList = value;
+                NotifyPropertyChanged("HotkeyList");
             }
         }
 
@@ -316,8 +376,8 @@ namespace OCROverlay.ViewModel
         private bool SetupLanguages_CanExecute(object obj) => true;
         private bool ChooseHotkey_CanExecute(object obj) => true;
         private bool Confirm_CanExecute(object obj) => true;
-        private bool KeyDownEvent_CanExecute(object obj) => true;
-        private bool KeyUpEvent_CanExecute(object obj) => true;
+        private bool KeyDownEvent_CanExecute(object obj) => HotkeyReady;
+        private bool KeyUpEvent_CanExecute(object obj) => HotkeyReady;
 
         #endregion //CanExecute
 
