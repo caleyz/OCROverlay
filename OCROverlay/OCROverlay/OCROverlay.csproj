@@ -87,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\DownloadProgress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SetupForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,11 +111,16 @@
     <Compile Include="Model\ScreenEntry.cs" />
     <Compile Include="Util\DialogCloser.cs" />
     <Compile Include="Util\MultiSelectionBehaviour.cs" />
+    <Compile Include="Util\PropertyManager.cs" />
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\DownloadProgressVM.cs" />
     <Compile Include="ViewModel\LanguageSelectionVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\SetupVM.cs" />
+    <Compile Include="View\DownloadProgress.xaml.cs">
+      <DependentUpon>DownloadProgress.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SetupForm.xaml.cs">
       <DependentUpon>SetupForm.xaml</DependentUpon>
     </Compile>

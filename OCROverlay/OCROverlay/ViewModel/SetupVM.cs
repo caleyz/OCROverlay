@@ -24,8 +24,10 @@ namespace OCROverlay.ViewModel
         public SetupVM()
         {            
             ScreenCheck();
-            DownloadLocationSetup();            
-            ///////////            
+            DownloadLocationSetup();
+#if DEBUG
+            TestButtonVisibility = Visibility.Visible;
+#endif
         }
 
         public void ResetLanguageImages()
@@ -70,6 +72,11 @@ namespace OCROverlay.ViewModel
             Properties.Settings.Default.ChosenScreen = chosenScreen.DeviceName;
         }
 
+        public void SaveHotkeys()
+        {
+            pMan.SaveProperty("HotkeyList", HotkeyList);
+        }
+
         public void ConfirmSettings()
         {
             //Should probably clean this up
@@ -83,6 +90,12 @@ namespace OCROverlay.ViewModel
             {
                 //
             }
+            else
+            {
+                return;
+            }
+            if (HotkeyList.Count > 0)
+                SaveHotkeys();
             else
             {
                 return;
@@ -105,6 +118,7 @@ namespace OCROverlay.ViewModel
             }
             catch (ArgumentException ex)
             {
+                throw ex;
                 // ArgumentException to indicate that the process doesn't exist
             }
             Process.Start(applicationName, "");
@@ -115,10 +129,12 @@ namespace OCROverlay.ViewModel
             ObservableCollection<Screen> screenHolder = new ObservableCollection<Screen>(Screen.AllScreens);
             foreach (Screen screen in screenHolder)
             {
-                ScreenEntry newScreen = new ScreenEntry();
-                newScreen.DeviceName = screen.DeviceName.Substring(4);
-                newScreen.Height = screen.Bounds.Height;
-                newScreen.Width = screen.Bounds.Width;
+                ScreenEntry newScreen = new ScreenEntry
+                {
+                    DeviceName = screen.DeviceName.Substring(4),
+                    Height = screen.Bounds.Height,
+                    Width = screen.Bounds.Width                    
+                };
                 newScreen.CombinedValue = String.Format("{0} ({1}x{2})", newScreen.DeviceName, newScreen.Width, newScreen.Height);
                 ScreenList.Add(newScreen);
             }
@@ -133,15 +149,9 @@ namespace OCROverlay.ViewModel
             bool value = await langForm.Fetch();
             Console.WriteLine(value);
             if (value)
-            {
-                //dispatcher.Invoke(new Action(() => { LanguageTickVisibility = Visibility.Visible; }), DispatcherPriority.Normal);
                 LanguageTickVisibility = Visibility.Visible;
-            }
             else
-            {
-                //dispatcher.Invoke(new Action(() => { LanguageCrossVisibility = Visibility.Visible; }), DispatcherPriority.Normal);
                 LanguageCrossVisibility = Visibility.Visible;
-            }
         }
 
         public void ChooseDownloadLocation()
@@ -150,9 +160,7 @@ namespace OCROverlay.ViewModel
             dialog.InitialDirectory = Path.GetFullPath(Properties.Settings.Default.DownloadLocation);
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
                 Console.WriteLine("You selected: " + dialog.FileName);
-            }
         }
 
         public void ChooseHotkey()
@@ -195,8 +203,25 @@ namespace OCROverlay.ViewModel
                     }
                     HotkeyReady = false;
                     WatchedKey = new Key();
-
                 }
+            }
+        }
+
+        public void TestFunction()
+        {
+            ObservableCollection<LanguageEntry> testEntries = new ObservableCollection<LanguageEntry>();
+            LanguageEntry dummyEntry = new LanguageEntry
+            {
+                DatapackURL = "",
+                LongName = "Aloha",
+                ShortCode = ""
+            };
+            testEntries.Add(dummyEntry);
+            pMan.SaveProperty("TestProperty", testEntries);
+            ObservableCollection<LanguageEntry> returnedVal = pMan.GetDeserializedProperty<ObservableCollection<LanguageEntry>>(Properties.Settings.Default.TestProperty);
+            foreach(LanguageEntry entry in returnedVal)
+            {
+                Console.WriteLine(entry.LongName);
             }
         }
 
@@ -319,6 +344,19 @@ namespace OCROverlay.ViewModel
             }
         }
 
+        private Visibility _testButtonVisibility = Visibility.Hidden;
+        public Visibility TestButtonVisibility
+        {
+            get { return _testButtonVisibility; }
+            set
+            {
+                if (value == _testButtonVisibility)
+                    return;
+                _testButtonVisibility = value;
+                NotifyPropertyChanged("TestButtonVisibility");
+            }
+        }
+
         private Visibility _languageCrossVisibility = Visibility.Hidden;
         public Visibility LanguageCrossVisibility
         {
@@ -368,6 +406,7 @@ namespace OCROverlay.ViewModel
         public void Confirm_execute(object obj) => ConfirmSettings();
         public void KeyDownEvent_execute(object obj) => KeyDownEventStart(obj);
         public void KeyUpEvent_execute(object obj) => KeyUpEventStart(obj);
+        public void Test_execute(object obj) => TestFunction();
 
         #endregion //Redirects
 
@@ -378,6 +417,7 @@ namespace OCROverlay.ViewModel
         private bool Confirm_CanExecute(object obj) => true;
         private bool KeyDownEvent_CanExecute(object obj) => HotkeyReady;
         private bool KeyUpEvent_CanExecute(object obj) => HotkeyReady;
+        private bool Test_CanExecute(object obj) => true;
 
         #endregion //CanExecute
 
@@ -400,6 +440,9 @@ namespace OCROverlay.ViewModel
 
         private RelayCommand _keyUpEvent;
         public RelayCommand KeyUpEvent => _keyUpEvent ?? (_keyUpEvent = new RelayCommand(KeyUpEvent_execute, KeyUpEvent_CanExecute));
+
+        private RelayCommand _testCommand;
+        public RelayCommand TestCommand => _testCommand ?? (_testCommand = new RelayCommand(Test_execute, Test_CanExecute));
 
         #endregion //RelayCommands
     }

@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using OCROverlay.Model;
+using OCROverlay.Properties;
 using OCROverlay.Util;
 using OCROverlay.View;
 using System;
@@ -50,6 +51,7 @@ namespace OCROverlay.ViewModel
 
             AvailableLanguageList = new ObservableCollection<LanguageEntry>(languageEntries.OrderBy(x => x.LongName));
             SelectedLanguageList = new ObservableCollection<LanguageEntry>();
+            SaveAllLanguagesList();
             RetrieveSavedLanguages();
         }
 
@@ -57,7 +59,7 @@ namespace OCROverlay.ViewModel
         {
             if(SelectedLanguageList.Count >= 2)
             {
-                SaveSelectedLanguages();
+                DownloadSelectedLanguages();
                 Close = true;                
             }
             else
@@ -72,36 +74,45 @@ namespace OCROverlay.ViewModel
 
         public void RetrieveSavedLanguages()
         {
-            using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(Properties.Settings.Default.SelectedLanguages)))
+            ObservableCollection<LanguageEntry> holder = pMan.GetDeserializedProperty<ObservableCollection<LanguageEntry>>(Settings.Default.SelectedLanguages);
+
+            foreach (LanguageEntry entry in holder)
             {
-                if (ms.Length != 0)
+                SelectedLanguageList.Add(entry);
+                AvailableLanguageList.Remove(AvailableLanguageList.Where(i => i.LongName == entry.LongName).Single());
+            }
+        }
+
+        public void CheckDownloadedLanguageDataPacks()
+        {
+            //List<Uri> uriList = new List<Uri>();
+            List<LanguageEntry> langList = new List<LanguageEntry>();
+            foreach(LanguageEntry entry in SelectedLanguageList)
+            {
+                string holder = Path.Combine(Settings.Default.DownloadLocation, entry.DatapackURL.Substring(entry.DatapackURL.LastIndexOf('/') + 1));
+                Console.WriteLine(holder);
+                if (!File.Exists(holder))
                 {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    ObservableCollection<LanguageEntry> holder = (ObservableCollection<LanguageEntry>)bf.Deserialize(ms);
-                    if (holder.Count > 0)
-                    {
-                        foreach (LanguageEntry entry in holder)
-                        {
-                            SelectedLanguageList.Add(entry);
-                            AvailableLanguageList.Remove(AvailableLanguageList.Where(i => i.LongName == entry.LongName).Single());
-                        }
-                    }
+                    langList.Add(entry);
                 }
             }
+            DownloadProgress downloadForm = new DownloadProgress(langList);
+            downloadForm.ShowDialog();
         }
 
         public void SaveSelectedLanguages()
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-                bf.Serialize(ms, SelectedLanguageList);
-                ms.Position = 0;
-                byte[] buffer = new byte[(int)ms.Length];
-                ms.Read(buffer, 0, buffer.Length);
-                Properties.Settings.Default.SelectedLanguages = Convert.ToBase64String(buffer);
-                Properties.Settings.Default.Save();
-            }
+            pMan.SaveProperty("SelectedLanguages", SelectedLanguageList);            
+        }
+
+        public void DownloadSelectedLanguages()
+        {
+            CheckDownloadedLanguageDataPacks();
+        }
+
+        public void SaveAllLanguagesList() //Save ALL short language codes to compare with later on to reference when making cmd arguments
+        {
+            pMan.SaveProperty("LanguageDataPackList", AvailableLanguageList);
         }
 
         public bool GetSelectedLanguageCount()
@@ -136,7 +147,7 @@ namespace OCROverlay.ViewModel
         public bool ShowWarningMessageBox()
         {
             bool retVal = false;
-            string messageBoxText = "Are you sure you wish add all languages? Language packs are very large in size (10mb+ EACH) and adding all language packs will result in downloading ~1GB of data";
+            string messageBoxText = "Are you sure you wish add all languages? Language packs are very large in size (10mb-30mb+ EACH) and adding all language packs will result in downloading ~1GB+ of data";
             string caption = "Warning";
             MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Warning;

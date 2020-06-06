@@ -1,4 +1,5 @@
 ﻿using OCROverlay.Events;
+using OCROverlay.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ namespace OCROverlay.ViewModel
         public delegate void ViewModelChangeEventHandler(object sender, ViewModelChangeEventArgs e);
         public event ViewModelChangeEventHandler ViewModelChangeRequest;
         public event PropertyChangedEventHandler PropertyChanged;
+        public PropertyManager pMan = new PropertyManager();
 
         protected void ChangeViewModel(string viewModelName, object data)
         {

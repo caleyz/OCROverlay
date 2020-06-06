@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:OCROverlay"
         mc:Ignorable="d"
         Title="MainWindow" Height="{Binding Height}" Width="{Binding Width}" WindowState="Maximized" WindowStartupLocation="CenterScreen" WindowStyle="None"
-        AllowsTransparency="True" Background="Transparent">
+        AllowsTransparency="True" Background="Transparent" ShowInTaskbar="False">
     <Grid/>
 </Window>

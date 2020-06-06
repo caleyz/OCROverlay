@@ -1,5 +1,8 @@
-﻿using System;
+﻿using OCROverlay.Properties;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +15,7 @@ namespace OCROverlay.ViewModel
         public MainWindowVM()
         {
             ScreenSetup();
+            TesseractSetup();
         }
 
         public void ScreenSetup()
@@ -20,6 +24,88 @@ namespace OCROverlay.ViewModel
             Screen = screen;
             Width = screen.Bounds.Width;
             Height = screen.Bounds.Height;
+        }
+
+        public void TesseractSetup()
+        {
+            var solutionDirectory = TryGetSolutionDirectoryInfo()?.FullName;
+            if (solutionDirectory == null)
+            {
+                Console.WriteLine("Could not find the solution folder.");
+                return;
+            }
+
+            Console.WriteLine(solutionDirectory);
+
+            var tesseractPath = solutionDirectory + @"\Tesseract";
+            var testFiles = Directory.EnumerateFiles(solutionDirectory + @"\sampleImages");
+
+            var maxDegreeOfParallelism = Environment.ProcessorCount;
+            Parallel.ForEach(testFiles, new ParallelOptions { MaxDegreeOfParallelism = maxDegreeOfParallelism }, (fileName) =>
+            {
+                var imageFile = File.ReadAllBytes(fileName);
+                var text = ParseText(tesseractPath, imageFile, "eng", "jpn");
+                Console.WriteLine("File:" + fileName + "\n" + text + "\n");
+            });
+        }
+
+        private static string ParseText(string tesseractPath, byte[] imageFile, params string[] lang)
+        {
+            string output = string.Empty;
+            var tempOutputFile = Path.GetTempPath() + Guid.NewGuid();
+            var tempImageFile = Path.GetTempFileName();
+
+            try
+            {
+                File.WriteAllBytes(tempImageFile, imageFile);
+
+                ProcessStartInfo info = new ProcessStartInfo();
+                info.WorkingDirectory = tesseractPath;
+                info.WindowStyle = ProcessWindowStyle.Hidden;
+                info.UseShellExecute = false;
+                info.FileName = "cmd.exe";
+                info.Arguments =
+                    "/c google.tesseract.tesseract-master.exe " + // Image file
+                    "--tessdata-dir " + Settings.Default.DownloadLocation + //Datapack location
+                    "" + //Image location (/image)
+                    "" + //Output image (hocr) file name
+                    "-l" + string.Join("+", lang) + 
+                    "hocr";                    
+                    
+                    //tempImageFile + " " +
+                    // Output file (tesseract add '.txt' at the end)
+                    //tempOutputFile +
+                    // Languages.
+                    //" -l " + string.Join("+", lang);
+
+                // Start tesseract.
+                Process process = Process.Start(info);
+                process.WaitForExit();
+                if (process.ExitCode == 0)
+                {
+                    // Exit code: success.
+                    output = File.ReadAllText(tempOutputFile + ".txt");
+                }
+                else
+                {
+                    throw new Exception("Error. Tesseract stopped with an error code = " + process.ExitCode);
+                }
+            }
+            finally
+            {
+                File.Delete(tempImageFile);
+                File.Delete(tempOutputFile + ".txt");
+            }
+
+            return output;
+        }
+
+        private static DirectoryInfo TryGetSolutionDirectoryInfo()
+        {
+            var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+            while (directory != null && !directory.GetFiles("*.sln").Any())
+                directory = directory.Parent;
+            return directory;
         }
 
         #region Variables

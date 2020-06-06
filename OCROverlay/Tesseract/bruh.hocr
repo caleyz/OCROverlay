@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name='ocr-system' content='tesseract master' />
+  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word ocrp_wconf'/>
+ </head>
+ <body>
+  <div class='ocr_page' id='page_1' title='image "C:\Users\Zack\source\repos\OCROverlay\OCROverlay\sampleImages\img.png"; bbox 0 0 480 172; ppageno 0'>
+   <div class='ocr_carea' id='block_1_1' title="bbox 2 2 479 168">
+    <p class='ocr_par' id='par_1_1' lang='jpn' title="bbox 2 2 479 168">
+     <span class='ocr_line' id='line_1_1' title="bbox 6 2 479 25; baseline -0.002 -2; x_size 27.301588; x_descenders 6.825397; x_ascenders 6.825397">
+      <span class='ocrx_word' id='word_1_1' title='bbox 6 2 143 24; x_wconf 92'>日</span>
+      <span class='ocrx_word' id='word_1_2' title='bbox 41 0 68 33; x_wconf 96'>本</span>
+      <span class='ocrx_word' id='word_1_3' title='bbox 68 0 89 33; x_wconf 96'>語</span>
+      <span class='ocrx_word' id='word_1_4' title='bbox 89 0 110 33; x_wconf 96'>の</span>
+      <span class='ocrx_word' id='word_1_5' title='bbox 110 0 146 33; x_wconf 95'>表</span>
+      <span class='ocrx_word' id='word_1_6' title='bbox 155 5 166 20; x_wconf 96'>記</span>
+      <span class='ocrx_word' id='word_1_7' title='bbox 173 3 188 22; x_wconf 96'>に</span>
+      <span class='ocrx_word' id='word_1_8' title='bbox 195 6 203 21; x_wconf 96'>お</span>
+      <span class='ocrx_word' id='word_1_9' title='bbox 208 8 214 17; x_wconf 96'>い</span>
+      <span class='ocrx_word' id='word_1_10' title='bbox 227 4 238 22; x_wconf 71'>て</span>
+      <span class='ocrx_word' id='word_1_11' title='bbox 243 3 262 22; x_wconf 94'>は</span>
+      <span class='ocrx_word' id='word_1_12' title='bbox 266 19 269 25; x_wconf 96'>,</span>
+      <span class='ocrx_word' id='word_1_13' title='bbox 299 2 329 24; x_wconf 76'>演</span>
+      <span class='ocrx_word' id='word_1_14' title='bbox 338 3 350 23; x_wconf 77'>学</span>
+      <span class='ocrx_word' id='word_1_15' title='bbox 362 2 368 24; x_wconf 96'>や</span>
+      <span class='ocrx_word' id='word_1_16' title='bbox 371 2 405 24; x_wconf 96'>仮</span>
+      <span class='ocrx_word' id='word_1_17' title='bbox 411 2 431 22; x_wconf 96'>名</span>
+      <span class='ocrx_word' id='word_1_18' title='bbox 435 2 449 23; x_wconf 97'>だ</span>
+      <span class='ocrx_word' id='word_1_19' title='bbox 449 0 461 33; x_wconf 96'>け</span>
+      <span class='ocrx_word' id='word_1_20' title='bbox 461 4 479 22; x_wconf 96'>で</span>
+     </span>
+     <span class='ocr_line' id='line_1_2' title="bbox 4 37 479 61; baseline 0.002 -2; x_size 27.301588; x_descenders 6.825397; x_ascenders 6.825397">
+      <span class='ocrx_word' id='word_1_21' title='bbox 4 38 21 59; x_wconf 96'>な</span>
+      <span class='ocrx_word' id='word_1_22' title='bbox 30 38 41 60; x_wconf 96'>く</span>
+      <span class='ocrx_word' id='word_1_23' title='bbox 50 55 53 61; x_wconf 94'>,</span>
+      <span class='ocrx_word' id='word_1_24' title='bbox 84 42 92 56; x_wconf 96'>ロ</span>
+      <span class='ocrx_word' id='word_1_25' title='bbox 102 46 118 50; x_wconf 96'>ー</span>
+      <span class='ocrx_word' id='word_1_26' title='bbox 123 42 141 56; x_wconf 97'>マ</span>
+      <span class='ocrx_word' id='word_1_27' title='bbox 156 38 190 60; x_wconf 96'>字</span>
+      <span class='ocrx_word' id='word_1_28' title='bbox 196 41 210 58; x_wconf 93'>や</span>
+      <span class='ocrx_word' id='word_1_29' title='bbox 210 33 228 70; x_wconf 91'>ア</span>
+      <span class='ocrx_word' id='word_1_30' title='bbox 228 40 236 59; x_wconf 93'>ラ</span>
+      <span class='ocrx_word' id='word_1_31' title='bbox 246 38 262 57; x_wconf 91'>ビ</span>
+      <span class='ocrx_word' id='word_1_32' title='bbox 268 41 285 58; x_wconf 92'>ア</span>
+      <span class='ocrx_word' id='word_1_33' title='bbox 294 38 330 60; x_wconf 96'>数</span>
+      <span class='ocrx_word' id='word_1_34' title='bbox 338 55 341 61; x_wconf 95'>字</span>
+      <span class='ocrx_word' id='word_1_35' title='bbox 354 33 366 70; x_wconf 91'>,</span>
+      <span class='ocrx_word' id='word_1_36' title='bbox 381 39 382 59; x_wconf 67'>さ</span>
+      <span class='ocrx_word' id='word_1_37' title='bbox 396 38 405 58; x_wconf 96'>ら</span>
+      <span class='ocrx_word' id='word_1_38' title='bbox 412 39 430 58; x_wconf 96'>に</span>
+      <span class='ocrx_word' id='word_1_39' title='bbox 438 37 465 60; x_wconf 64'>句</span>
+      <span class='ocrx_word' id='word_1_40' title='bbox 466 38 479 59; x_wconf 95'>読</span>
+     </span>
+     <span class='ocr_line' id='line_1_3' title="bbox 2 74 477 96; baseline -0.002 -1; x_size 27.301588; x_descenders 6.825397; x_ascenders 6.825397">
+      <span class='ocrx_word' id='word_1_41' title='bbox 2 74 39 95; x_wconf 85'>点</span>
+      <span class='ocrx_word' id='word_1_42' title='bbox 49 74 58 95; x_wconf 92'>や</span>
+      <span class='ocrx_word' id='word_1_43' title='bbox 60 74 90 96; x_wconf 92'>括</span>
+      <span class='ocrx_word' id='word_1_44' title='bbox 98 74 119 96; x_wconf 71'>弥</span>
+      <span class='ocrx_word' id='word_1_45' title='bbox 124 74 141 95; x_wconf 47'>類</span>
+      <span class='ocrx_word' id='word_1_46' title='bbox 149 74 159 94; x_wconf 96'>な</span>
+      <span class='ocrx_word' id='word_1_47' title='bbox 162 76 167 81; x_wconf 96'>ど</span>
+      <span class='ocrx_word' id='word_1_48' title='bbox 174 74 201 95; x_wconf 96'>の</span>
+      <span class='ocrx_word' id='word_1_49' title='bbox 204 74 231 95; x_wconf 96'>記</span>
+      <span class='ocrx_word' id='word_1_50' title='bbox 242 74 258 95; x_wconf 96'>述</span>
+      <span class='ocrx_word' id='word_1_51' title='bbox 270 74 287 96; x_wconf 96'>記</span>
+      <span class='ocrx_word' id='word_1_52' title='bbox 292 74 309 95; x_wconf 81'>号</span>
+      <span class='ocrx_word' id='word_1_53' title='bbox 313 75 333 95; x_wconf 92'>を</span>
+      <span class='ocrx_word' id='word_1_54' title='bbox 339 78 358 93; x_wconf 88'>用</span>
+      <span class='ocrx_word' id='word_1_55' title='bbox 364 75 378 94; x_wconf 96'>い</span>
+      <span class='ocrx_word' id='word_1_56' title='bbox 386 88 393 95; x_wconf 93'>る</span>
+      <span class='ocrx_word' id='word_1_57' title='bbox 393 70 414 106; x_wconf 92'>。</span>
+      <span class='ocrx_word' id='word_1_58' title='bbox 414 76 428 93; x_wconf 92'>こ</span>
+      <span class='ocrx_word' id='word_1_59' title='bbox 435 75 455 94; x_wconf 96'>れ</span>
+      <span class='ocrx_word' id='word_1_60' title='bbox 462 74 477 94; x_wconf 96'>ら</span>
+     </span>
+     <span class='ocr_line' id='line_1_4' title="bbox 4 109 479 133; baseline -0.002 -1; x_size 27.301588; x_descenders 6.825397; x_ascenders 6.825397">
+      <span class='ocrx_word' id='word_1_61' title='bbox 4 109 33 132; x_wconf 93'>を</span>
+      <span class='ocrx_word' id='word_1_62' title='bbox 42 111 47 130; x_wconf 92'>組</span>
+      <span class='ocrx_word' id='word_1_63' title='bbox 60 110 93 131; x_wconf 96'>み</span>
+      <span class='ocrx_word' id='word_1_64' title='bbox 99 111 118 130; x_wconf 96'>合</span>
+      <span class='ocrx_word' id='word_1_65' title='bbox 123 111 138 130; x_wconf 96'>わ</span>
+      <span class='ocrx_word' id='word_1_66' title='bbox 138 105 153 143; x_wconf 96'>せ</span>
+      <span class='ocrx_word' id='word_1_67' title='bbox 153 112 166 130; x_wconf 96'>て</span>
+      <span class='ocrx_word' id='word_1_68' title='bbox 177 110 192 132; x_wconf 96'>表</span>
+      <span class='ocrx_word' id='word_1_69' title='bbox 204 110 215 132; x_wconf 93'>す</span>
+      <span class='ocrx_word' id='word_1_70' title='bbox 222 111 235 131; x_wconf 92'>日</span>
+      <span class='ocrx_word' id='word_1_71' title='bbox 252 110 282 131; x_wconf 96'>本</span>
+      <span class='ocrx_word' id='word_1_72' title='bbox 291 113 303 129; x_wconf 96'>語</span>
+      <span class='ocrx_word' id='word_1_73' title='bbox 303 105 324 143; x_wconf 97'>の</span>
+      <span class='ocrx_word' id='word_1_74' title='bbox 324 110 359 132; x_wconf 96'>文</span>
+      <span class='ocrx_word' id='word_1_75' title='bbox 363 112 383 130; x_wconf 96'>書</span>
+      <span class='ocrx_word' id='word_1_76' title='bbox 387 112 392 130; x_wconf 97'>で</span>
+      <span class='ocrx_word' id='word_1_77' title='bbox 396 111 406 130; x_wconf 97'>は</span>
+      <span class='ocrx_word' id='word_1_78' title='bbox 410 127 413 133; x_wconf 93'>,</span>
+      <span class='ocrx_word' id='word_1_79' title='bbox 434 110 479 132; x_wconf 93'>表</span>
+      <span class='ocrx_word' id='word_1_80' title='bbox 465 105 480 143; x_wconf 96'>記</span>
+     </span>
+     <span class='ocr_line' id='line_1_5' title="bbox 2 145 321 168; baseline 0 -2; x_size 27.301588; x_descenders 6.825397; x_ascenders 6.825397">
+      <span class='ocrx_word' id='word_1_81' title='bbox 2 146 46 166; x_wconf 96'>上</span>
+      <span class='ocrx_word' id='word_1_82' title='bbox 51 147 66 166; x_wconf 96'>に</span>
+      <span class='ocrx_word' id='word_1_83' title='bbox 75 148 79 165; x_wconf 97'>お</span>
+      <span class='ocrx_word' id='word_1_84' title='bbox 84 146 94 167; x_wconf 96'>け</span>
+      <span class='ocrx_word' id='word_1_85' title='bbox 102 145 130 168; x_wconf 96'>る</span>
+      <span class='ocrx_word' id='word_1_86' title='bbox 132 145 162 166; x_wconf 96'>種</span>
+      <span class='ocrx_word' id='word_1_87' title='bbox 162 141 177 172; x_wconf 96'>々</span>
+      <span class='ocrx_word' id='word_1_88' title='bbox 177 146 203 168; x_wconf 96'>の</span>
+      <span class='ocrx_word' id='word_1_89' title='bbox 204 146 239 168; x_wconf 86'>間</span>
+      <span class='ocrx_word' id='word_1_90' title='bbox 242 147 264 167; x_wconf 93'>題</span>
+      <span class='ocrx_word' id='word_1_91' title='bbox 267 146 279 167; x_wconf 96'>が</span>
+      <span class='ocrx_word' id='word_1_92' title='bbox 279 141 294 172; x_wconf 96'>あ</span>
+      <span class='ocrx_word' id='word_1_93' title='bbox 294 147 308 166; x_wconf 93'>る</span>
+      <span class='ocrx_word' id='word_1_94' title='bbox 314 160 321 167; x_wconf 92'>。</span>
+     </span>
+    </p>
+   </div>
+   <div class='ocr_carea' id='block_1_2' title="bbox 143 2 155 22">
+    <p class='ocr_par' id='par_1_2' lang='jpn' title="bbox 143 2 155 22">
+     <span class='ocr_line' id='line_1_6' title="bbox 143 2 155 22; baseline 0 150; x_size 26.25; x_descenders 6.5625; x_ascenders 6.5625">
+      <span class='ocrx_word' id='word_1_95' title='bbox 143 2 155 22; x_wconf 95'> </span>
+     </span>
+    </p>
+   </div>
+  </div>
+ </body>
+</html>

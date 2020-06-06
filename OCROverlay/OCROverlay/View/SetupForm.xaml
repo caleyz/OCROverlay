@@ -39,6 +39,9 @@
         <Button x:Name="btn_confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50"
         FontSize="24" Content="Confirm" Margin="142,276,0,0" Command="{Binding ConfirmCommand}"/>
 
+        <Button x:Name="btn_test" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50" Background="Red"
+        FontSize="24" Content="TEST" Margin="10,247,0,0" Command="{Binding TestCommand}" Visibility="{Binding TestButtonVisibility}"/>
+
         <TextBlock x:Name="lbl_download_location" HorizontalAlignment="Left"  Text="{Binding DownloadLocationText}" Margin="235,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="48" Width="227"/>
 
         <TextBlock x:Name="lbl_keys_pressed" HorizontalAlignment="Left"  Text="{Binding KeysPressedText}" Margin="235,95,0,0" FontSize="24" TextWrapping="Wrap" VerticalAlignment="Top" Height="52" Width="227"/>
