@@ -69,14 +69,8 @@ namespace OCROverlay.ViewModel
                     "--tessdata-dir " + Settings.Default.DownloadLocation + //Datapack location
                     "" + //Image location (/image)
                     "" + //Output image (hocr) file name
-                    "-l" + string.Join("+", lang) + 
-                    "hocr";                    
-                    
-                    //tempImageFile + " " +
-                    // Output file (tesseract add '.txt' at the end)
-                    //tempOutputFile +
-                    // Languages.
-                    //" -l " + string.Join("+", lang);
+                    "-l" + string.Join("+", lang) + //Languages
+                    "hocr"; //Text position for everything OCR'
 
                 // Start tesseract.
                 Process process = Process.Start(info);

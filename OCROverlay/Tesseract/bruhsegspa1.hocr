@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name='ocr-system' content='tesseract master' />
+  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word ocrp_wconf'/>
+ </head>
+ <body>
+  <div class='ocr_page' id='page_1' title='image "C:\Users\Zack\source\repos\OCROverlay\OCROverlay\sampleImages\spanish.jpg"; bbox 0 0 640 410; ppageno 0'>
+   <div class='ocr_carea' id='block_1_1' title="bbox 31 39 602 358">
+    <p class='ocr_par' id='par_1_1' lang='spa' title="bbox 31 39 602 358">
+     <span class='ocr_line' id='line_1_1' title="bbox 32 39 545 71; baseline 0 -8; x_size 32; x_descenders 8; x_ascenders 6">
+      <span class='ocrx_word' id='word_1_1' title='bbox 32 39 74 63; x_wconf 91'>Sin</span>
+      <span class='ocrx_word' id='word_1_2' title='bbox 85 39 217 71; x_wconf 91'>embargº,</span>
+      <span class='ocrx_word' id='word_1_3' title='bbox 229 46 288 63; x_wconf 89'>creº</span>
+      <span class='ocrx_word' id='word_1_4' title='bbox 299 45 350 70; x_wconf 90'>que</span>
+      <span class='ocrx_word' id='word_1_5' title='bbox 362 39 392 63; x_wconf 91'>ha</span>
+      <span class='ocrx_word' id='word_1_6' title='bbox 404 39 509 71; x_wconf 90'>llegadº</span>
+      <span class='ocrx_word' id='word_1_7' title='bbox 520 39 545 63; x_wconf 96'>el</span>
+     </span>
+     <span class='ocr_line' id='line_1_2' title="bbox 32 87 575 118; baseline 0 -7; x_size 31; x_descenders 7; x_ascenders 6">
+      <span class='ocrx_word' id='word_1_8' title='bbox 32 90 168 111; x_wconf 91'>mºmentº</span>
+      <span class='ocrx_word' id='word_1_9' title='bbox 179 87 212 111; x_wconf 92'>de</span>
+      <span class='ocrx_word' id='word_1_10' title='bbox 223 87 289 111; x_wconf 91'>abrir</span>
+      <span class='ocrx_word' id='word_1_11' title='bbox 299 93 348 111; x_wconf 92'>una</span>
+      <span class='ocrx_word' id='word_1_12' title='bbox 360 93 442 111; x_wconf 92'>nueva</span>
+      <span class='ocrx_word' id='word_1_13' title='bbox 453 90 531 118; x_wconf 92'>etapa</span>
+      <span class='ocrx_word' id='word_1_14' title='bbox 542 93 575 111; x_wconf 96'>en</span>
+     </span>
+     <span class='ocr_line' id='line_1_3' title="bbox 32 135 587 167; baseline 0 -8; x_size 31; x_descenders 7; x_ascenders 7">
+      <span class='ocrx_word' id='word_1_15' title='bbox 32 136 63 159; x_wconf 93'>mi</span>
+      <span class='ocrx_word' id='word_1_16' title='bbox 74 135 132 159; x_wconf 90'>vida</span>
+      <span class='ocrx_word' id='word_1_17' title='bbox 142 142 157 167; x_wconf 93'>y</span>
+      <span class='ocrx_word' id='word_1_18' title='bbox 168 142 214 166; x_wconf 90'>pºr</span>
+      <span class='ocrx_word' id='word_1_19' title='bbox 224 142 272 159; x_wconf 92'>esº</span>
+      <span class='ocrx_word' id='word_1_20' title='bbox 284 135 315 159; x_wconf 93'>he</span>
+      <span class='ocrx_word' id='word_1_21' title='bbox 327 135 423 166; x_wconf 90'>pedidº</span>
+      <span class='ocrx_word' id='word_1_22' title='bbox 434 135 460 159; x_wconf 92'>al</span>
+      <span class='ocrx_word' id='word_1_23' title='bbox 468 135 526 159; x_wconf 88'>club</span>
+      <span class='ocrx_word' id='word_1_24' title='bbox 537 142 587 166; x_wconf 91'>que</span>
+     </span>
+     <span class='ocr_line' id='line_1_4' title="bbox 31 181 602 215; baseline 0 -8; x_size 30; x_descenders 7; x_ascenders 5">
+      <span class='ocrx_word' id='word_1_25' title='bbox 31 186 125 214; x_wconf 90'>acepte</span>
+      <span class='ocrx_word' id='word_1_26' title='bbox 135 186 319 214; x_wconf 89'>traspasarme.</span>
+      <span class='ocrx_word' id='word_1_27' title='bbox 332 184 362 207; x_wconf 92'>Lº</span>
+      <span class='ocrx_word' id='word_1_28' title='bbox 373 184 458 207; x_wconf 91'>sientº</span>
+      <span class='ocrx_word' id='word_1_29' title='bbox 469 181 530 215; x_wconf 92'>así</span>
+      <span class='ocrx_word' id='word_1_30' title='bbox 519 177 531 219; x_wconf 92'>y</span>
+      <span class='ocrx_word' id='word_1_31' title='bbox 541 183 602 214; x_wconf 89'>pidº</span>
+     </span>
+     <span class='ocr_line' id='line_1_5' title="bbox 31 231 478 263; baseline 0 -8; x_size 32; x_descenders 8; x_ascenders 6">
+      <span class='ocrx_word' id='word_1_32' title='bbox 31 237 45 255; x_wconf 93'>a</span>
+      <span class='ocrx_word' id='word_1_33' title='bbox 56 231 142 259; x_wconf 92'>tºdºs,</span>
+      <span class='ocrx_word' id='word_1_34' title='bbox 153 238 169 263; x_wconf 96'>y</span>
+      <span class='ocrx_word' id='word_1_35' title='bbox 179 237 238 263; x_wconf 92'>muy</span>
+      <span class='ocrx_word' id='word_1_36' title='bbox 248 231 453 262; x_wconf 90'>especialmente</span>
+      <span class='ocrx_word' id='word_1_37' title='bbox 464 238 478 255; x_wconf 96'>a</span>
+     </span>
+     <span class='ocr_line' id='line_1_6' title="bbox 32 279 579 311; baseline 0 -8; x_size 31; x_descenders 7; x_ascenders 6">
+      <span class='ocrx_word' id='word_1_38' title='bbox 32 282 153 303; x_wconf 92'>nuestrºs</span>
+      <span class='ocrx_word' id='word_1_39' title='bbox 163 279 324 311; x_wconf 88'>seguidºres,</span>
+      <span class='ocrx_word' id='word_1_40' title='bbox 337 286 387 310; x_wconf 91'>que</span>
+      <span class='ocrx_word' id='word_1_41' title='bbox 398 285 445 310; x_wconf 89'>pºr</span>
+      <span class='ocrx_word' id='word_1_42' title='bbox 454 279 527 303; x_wconf 91'>favºr</span>
+      <span class='ocrx_word' id='word_1_43' title='bbox 537 285 579 303; x_wconf 96'>me</span>
+     </span>
+     <span class='ocr_line' id='line_1_7' title="bbox 31 327 218 358; baseline 0 -7; x_size 31; x_descenders 7; x_ascenders 6">
+      <span class='ocrx_word' id='word_1_44' title='bbox 31 327 218 358; x_wconf 89'>cºmprendan.</span>
+     </span>
+    </p>
+   </div>
+  </div>
+ </body>
+</html>

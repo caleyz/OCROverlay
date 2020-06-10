@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using HtmlAgilityPack;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using OCROverlay.Model;
 using OCROverlay.Util;
 using OCROverlay.View;
@@ -15,6 +16,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Xml.Linq;
 
 namespace OCROverlay.ViewModel
 {
@@ -209,20 +211,42 @@ namespace OCROverlay.ViewModel
 
         public void TestFunction()
         {
-            ObservableCollection<LanguageEntry> testEntries = new ObservableCollection<LanguageEntry>();
-            LanguageEntry dummyEntry = new LanguageEntry
+            //local function
+            DirectoryInfo TryGetSolutionDirectoryInfo()
             {
-                DatapackURL = "",
-                LongName = "Aloha",
-                ShortCode = ""
-            };
-            testEntries.Add(dummyEntry);
-            pMan.SaveProperty("TestProperty", testEntries);
-            ObservableCollection<LanguageEntry> returnedVal = pMan.GetDeserializedProperty<ObservableCollection<LanguageEntry>>(Properties.Settings.Default.TestProperty);
-            foreach(LanguageEntry entry in returnedVal)
-            {
-                Console.WriteLine(entry.LongName);
+                var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+                while (directory != null && !directory.GetFiles("*.sln").Any())
+                    directory = directory.Parent;
+                return directory;
             }
+
+            var solutionDirectory = TryGetSolutionDirectoryInfo()?.FullName;
+            var tesseractPath = solutionDirectory + @"\Tesseract";
+            var filePath = Path.Combine(tesseractPath, "bruh.hocr");
+
+            HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc.Load(filePath, Encoding.UTF8);
+
+            var paragraphs = htmlDoc.DocumentNode.SelectNodes("//span").Where<HtmlNode>(x => x.InnerLength < 20);
+            List<DetectedWord> wordList = new List<DetectedWord>();
+            foreach (HtmlNode paragraph in paragraphs)
+            {                
+                if (paragraph.Attributes.Count == 3)
+                {
+                    DetectedWord word = new DetectedWord();
+                    var holder = paragraph.Attributes[2].Value.Split(' ');
+                    word.Word = paragraph.InnerText;
+                    word.Class = paragraph.Attributes[0].Value;
+                    word.Id = paragraph.Attributes[1].Value;
+                    word.FullTitle = paragraph.Attributes[2].Value;
+                    word.TopStartingPosition = Int32.Parse(paragraph.Attributes[2].Value.Split(' ')[2]);
+                    word.BottomEndingPosition = Int32.Parse(String.Join("", paragraph.Attributes[2].Value.Split(' ')[4].Split(';'))); //Need to remove trailing semicolon
+                    word.LeftStartingPosition = Int32.Parse(paragraph.Attributes[2].Value.Split(' ')[1]);
+                    word.RightEndingPosition = Int32.Parse(paragraph.Attributes[2].Value.Split(' ')[3]);
+                    wordList.Add(word);
+                }
+            }
+            Console.WriteLine("Dummy");
         }
 
         #region Variables

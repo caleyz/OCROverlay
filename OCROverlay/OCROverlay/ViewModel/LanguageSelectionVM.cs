@@ -23,6 +23,7 @@ namespace OCROverlay.ViewModel
         {
             Console.WriteLine("Language Selection VM was initialised");
             GrabLanguagePacks();
+            //DetermineDownloadedPacks();
         }
 
         private void GrabLanguagePacks()
